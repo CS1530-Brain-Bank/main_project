@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+
+a.forgotpassword, a.forgotpassword:visited {
+	text-align: center;
+	color: white;
+}
+
+a.forgotpassword:hover, a.forgotpassword:active {
+	color: darkgreen;
+}
+
+body {
+	background-color: #88BB77;
+	text-align: center;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+}
+
+button.nav {
+	background-color: #669955;
+	border: none;
+	border-radius: 30px;
+	color: white;
+	height: 32px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	width: 256px;
+}
+
+button.nav:active, button.nav:hover {
+	background-color: #447744;
+	border: none;
+	border-radius: 30px;
+	height: 32px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	width: 256px;
+}
+
+#container {
+	margin-bottom: 20%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 4%;
+}
+
+#content {
+	background-color: #bbddbb;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-bottom: 75%;
+	padding-left: 24px;
+	padding-top: 4px;
+	padding-right: 24px;
+}
+
+#header {
+	margin-top: 2%;
+	margin-left: 2%;
+	text-align: left;
+}
+
+input[type=email] {
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	text-indent: 8px;
+	width: 256px;
+}
+
+input[type=password] {
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	text-indent: 8px;
+	width: 256px;
+}
+
+p {
+	text-align: left;
+}
+
