@@ -29,3 +29,16 @@ con.query("USE brainbank", function(err, result, fields){
 
 /* ********************** KEEP ABOVE - INSERT YOUR TABLE CREATION BELOW ************************* */
 
+// Creates photo table
+// Change "photo" to name of your table, change "photo(name TEXT, ...)" to what your table requires
+// con.query("CREATE TABLE IF NOT EXISTS photo(name TEXT, ...)", function(err, result, fields){
+//     if(err) throw err;
+//     console.log("Created photo table in database");
+// });
+
+// Use queries to init table properties for service
+// con.query("SQL COMMAND", function(err, result, fields){
+//     if(err) throw err;
+//     console.log("WHAT THIS DID");
+// });
+
