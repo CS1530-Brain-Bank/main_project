@@ -1,10 +1,14 @@
+// Server.js
+// Last Modified: 11/16/2021
+
+/* ******************* Init packages ******************* */
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var mysql = require('mysql2');
 
-
+/* ******************* Setup database connection ******************* */
 // Creates connection to database using root
 var con = mysql.createConnection({
   host: "localhost",
@@ -20,6 +24,7 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
+/* ******************* Send html/css/js files to client ******************* */
 
 // Send off login.html page to client
 app.get('/login.html', (req, res) => {
@@ -56,6 +61,8 @@ app.get('/app.js', (req, res) => {
     res.sendFile(__dirname + '/app.js');
 });
 
+/* ******************* Form Controllers ******************* */
+
 // Get data from login form and manipulate database   
 // Just a test to demonstrate working connection to database 
 app.post('/login', urlencodedParser, (req, res) => {
@@ -82,6 +89,8 @@ app.post('/login', urlencodedParser, (req, res) => {
         console.log(result);
     });
 });
+
+/* ******************* Listener ******************* */
 
 // Server on port 8082
 app.listen(8082);

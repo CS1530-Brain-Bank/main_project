@@ -1,3 +1,6 @@
+// createPhotoTable.js
+// Last Modified: 11/16/2021
+
 var mysql = require('mysql2');
 
 // Creates connection to database using root
