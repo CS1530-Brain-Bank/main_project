@@ -86,8 +86,8 @@ app.get('/app.js', (req, res) => {
 });
 
 // Send off index.ejs script to client
-app.get('/photoUpload.ejs', (req, res) => {
-  res.render(__dirname + '/photoUpload.ejs');
+app.get('/index.ejs', (req, res) => {
+  res.render(__dirname + '/index.ejs');
 });
 
 // Send off imageView.ejs script to client
@@ -108,21 +108,20 @@ app.post('/login', urlencodedParser, (req, res) => {
         'Location': '/home.html'
     });
     res.end();
-    console.log("Login successful");
 
     // SQL queries
-    // con.query("USE pets");
-    // con.query("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
-    // con.query("INSERT INTO emp(id,name) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
-    //     if(err) throw err;
-    //     // console.log(result);
-    //     // console.log("Table results above");
-    // });
-    // con.query("SELECT * FROM emp", function(err, result, field){
-    //     if(err) throw err;
-    //     console.log("emp table below:");
-    //     console.log(result);
-    // });
+    con.query("USE pets");
+    con.query("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
+    con.query("INSERT INTO emp(id,name) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+        if(err) throw err;
+        // console.log(result);
+        // console.log("Table results above");
+    });
+    con.query("SELECT * FROM emp", function(err, result, field){
+        if(err) throw err;
+        console.log("emp table below:");
+        console.log(result);
+    });
 });
 
 // Picture controller
@@ -190,6 +189,37 @@ app.post('/calendar', urlencodedParser, (req, res) => {
          console.log("calendar table below:");
          console.log(result);
      });
+});
+
+//Contacts
+app.post('/contacts', urlencodedParser, (req, res) => {
+
+  // Redirects to home page after form submission
+  res.writeHead(302, {
+      'Location': '/contacts.html'
+  });
+  res.end();
+
+  // SQL queries
+  con.query("USE brainbank", function(err, result, fields){
+      if(err) throw err;
+      console.log("Set database to brainbank");
+  });
+
+  //Create calendar table
+  con.query("CREATE TABLE IF NOT EXISTS contacts(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, name Text Not NULL, relationship TEXT NOT NULL", function(err, result, fields){
+    if(err) throw err;
+    console.log("Created contacts table in database");
+});
+
+  con.query("INSERT INTO calendar(userId, name, relationship) VALUES(?,?,?)", [req.body.userId, req.body.name, req.body.relationship], function(err, result, field){
+        if(err) throw err;
+  });
+
+  con.query("SELECT * FROM contacts", function(err, result, field){
+       if(err) throw err;
+       console.log(result);
+   });
 });
 
 
