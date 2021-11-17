@@ -46,6 +46,16 @@ app.get('/search.html', (req, res) => {
   res.sendFile(__dirname + '/search.html');
 });
 
+// Send off contacts.html page to client
+app.get('/contacts.html', (req, res) => {
+  res.sendFile(__dirname + '/contacts.html');
+});
+
+// Send off pictures.html page to client
+app.get('/pictures.html', (req, res) => {
+  res.sendFile(__dirname + '/pictures.html');
+});
+
 // Send off signup.html page to client
 app.get('/signup.html', (req, res) => {
   res.sendFile(__dirname + '/signup.html');
@@ -59,6 +69,16 @@ app.get('/default.css', (req, res) => {
 // Send off app.js script to client
 app.get('/app.js', (req, res) => {
     res.sendFile(__dirname + '/app.js');
+});
+
+// Send off index.ejs script to client
+app.get('/index.ejs', (req, res) => {
+  res.sendFile(__dirname + '/index.ejs');
+});
+
+// Send off imageView.ejs script to client
+app.get('/imageView.ejs', (req, res) => {
+  res.sendFile(__dirname + '/imageView.ejs');
 });
 
 /* ******************* Form Controllers ******************* */
@@ -88,6 +108,32 @@ app.post('/login', urlencodedParser, (req, res) => {
         console.log("emp table below:");
         console.log(result);
     });
+});
+
+// Picture controller
+app.get("/image/:id", (req, res) => {
+  const { id }=req.params;
+  const query = "Select file_data From file Where id = ?";
+  con.query(query, [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    // console.log(Buffer.from(result[0].file_data).toString())
+    res.render("imageView", { name: result[0].file_data });
+  })
+});
+
+// Picture controller
+app.post("/store", (req, res) => {
+  const { image, fileName } = req.body;
+  const query = "Insert Into file(null, file_name, file_data, created_by, created_on) Values(?,?,?,CURRENT_TIMESTAMP)";
+  con.query(query, [fileName, image, 'Program'], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send({ msg:'SERVER_ERROR' });
+    }
+    res.status(200).send({ id:result.insertId });
+  })
 });
 
 /* ******************* Listener ******************* */
