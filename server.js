@@ -144,6 +144,40 @@ app.post("/store", (req, res) => {
   })
 });
 
+app.post('/calendar', urlencodedParser, (req, res) => {
+    // console.log('Got body:', req.body);
+    // res.sendStatus(200);
+
+    // Redirects to home page after form submission
+    res.writeHead(302, {
+        'Location': '/calendar.html'
+    });
+    res.end();
+
+    // SQL queries
+    con.query("USE brainbank", function(err, result, fields){
+        if(err) throw err;
+        console.log("Set database to brainbank");
+    });
+
+    //Create calendar table
+    con.query("CREATE TABLE IF NOT EXISTS calendar(taskId int PRIMARY KEY NOT NULL AUTO_INCREMENT, userId TEXT NOT NULL, startDate DATE NOT NULL, startTime TIME, endTime TIME, name TEXT NOT NULL, active BOOL NOT NULL, descr TEXT)", function(err, result, fields){
+         if(err) throw err;
+         console.log("Created calendar table in database");
+    });
+
+    con.query("INSERT INTO calendar(userId, startDate, name, active) VALUES(?,?,?,?)", [req.body.userId, req.body.startDate, req.body.name, true], function(err, result, field){
+          if(err) throw err;
+    });
+
+    con.query("SELECT * FROM calendar", function(err, result, field){
+         if(err) throw err;
+         console.log("calendar table below:");
+         console.log(result);
+     });
+});
+
+
 /* ******************* Listener ******************* */
 
 // Server on port 8082
