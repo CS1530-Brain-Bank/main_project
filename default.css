@@ -163,6 +163,69 @@ select.sort {
 	width: 30%;
 }
 
+#calenderimage {
+	background-image: url("calender.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	bottom: 8%;
+	float: right;
+	height: 200px;
+	position: relative;
+	right: 12%;
+	top: 12%;
+	width: 55%;
+}
+
+#contactsimage {
+	background-image: url("contacts.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	bottom: 6%;
+	float: right;
+	height: 220px;
+	position: relative;
+	right: 8%;
+	top: 12%;
+	width: 65%;
+}
+
+div.homepagetext {
+	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
+	font-weight: 600;
+	padding-left: 4%;
+	padding-top: 4%;
+}
+
+#picturesimage {
+	background-image: url("pictures.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	bottom: 6%;
+	float: right;
+	height: 200px;
+	position: relative;
+	right: 10%;
+	top: 14%;
+	width: 50%;
+}
+
+#searchimage {
+	background-image: url("search.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	bottom: 4%;
+	float: right;
+	height: 210px;
+	position: relative;
+	right: 12%;
+	top: 14%;
+	width: 60%;
+}
+
 div.homepagetext {
 	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
 	font-weight: 600;
