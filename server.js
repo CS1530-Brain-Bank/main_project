@@ -46,6 +46,16 @@ app.get('/search.html', (req, res) => {
   res.sendFile(__dirname + '/search.html');
 });
 
+// Send off calendar.html page to client
+app.get('/calendar.html', (req, res) => {
+  res.sendFile(__dirname + '/calendar.html');
+});
+
+// Send off addTask.html page to client
+app.get('/addTask.html', (req, res) => {
+  res.sendFile(__dirname + '/addTask.html');
+});
+
 // Send off signup.html page to client
 app.get('/signup.html', (req, res) => {
   res.sendFile(__dirname + '/signup.html');
