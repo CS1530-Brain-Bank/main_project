@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-	<title>Search</title>
+	<title>Contacts</title>
 	<script type="application/javascript" src="styleswitcher.js"></script>
 	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
 	<link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" />
@@ -13,9 +13,18 @@
 		<a href="home.html"><button class="nav">Back</button></a>
 	</div>
 	<div id="container">
-		<h1>Search Page</h1>
+		<h1>Contacts Page</h1>
 		<div id="content">
-			<p>Search results will be displayed here.</p>
+			<p>
+				<label for="sort">Sort By: </label>
+				<select name="sort" id="sort" class="sort">
+					<option value="newest">Newest Added First</option>
+					<option value="oldest">Oldest Added First</option>
+					<option value="alphabetical">Alphabetical (A-Z)</option>
+					<option value="reversealpha">Alphabetical (Z-A)</option>
+				</select>
+				<button class="add">+</button>
+			</p>
 		</div>
 	</div>
 </body>
