@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <title>Add Contact</title>
+    <link rel="stylesheet" type="text/css" href="default.css" title="Default" />
+
+    <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body>
+<div id="container">
+    <form action="/calendar" method="POST">
+        <h3>Add Contact - required fields are marked *</h3>
+        <div>
+            <label>UserId*: </label>
+            <input type="text" name="userId">
+        </div>
+        <div>
+            <label>Name*: </label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label>Relationship*: </label>
+            <input type="text" name="relationship">
+        </div>
+      
+        <button type="submit" class="nav">Submit</button>
+    </form>
+</div>
+</body>
+<style>
+    p {
+        text-align: center;
+        padding: 0px;
+    }
+    textarea {
+        width: 250px;
+        height: 100px;
+    }
+    label {
+        display: inline-block;
+        text-align: right;
+        font-size: 15px;
+    }
+    div {
+        margin-bottom: 10px;
+    }
+</style>
+</html>
