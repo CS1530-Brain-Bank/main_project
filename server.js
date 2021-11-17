@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var mysql = require('mysql2');
 
+app.set("view engine", "ejs");
+app.use(express.json({limit: "50mb"}));
+app.use(express.urlencoded({extentded:true}));
+
 /* ******************* Setup database connection ******************* */
 // Creates connection to database using root
 var con = mysql.createConnection({
@@ -83,12 +87,12 @@ app.get('/app.js', (req, res) => {
 
 // Send off index.ejs script to client
 app.get('/index.ejs', (req, res) => {
-  res.sendFile(__dirname + '/index.ejs');
+  res.render(__dirname + '/index.ejs');
 });
 
 // Send off imageView.ejs script to client
 app.get('/imageView.ejs', (req, res) => {
-  res.sendFile(__dirname + '/imageView.ejs');
+  res.render(__dirname + '/imageView.ejs');
 });
 
 /* ******************* Form Controllers ******************* */
@@ -123,7 +127,11 @@ app.post('/login', urlencodedParser, (req, res) => {
 // Picture controller
 app.get("/image/:id", (req, res) => {
   const { id }=req.params;
-  const query = "Select file_data From file Where id = ?";
+  con.query("USE brainbank", function(err, result, fields){
+    if(err) throw err;
+    console.log("Set database to brainbank");
+  });
+  const query = "Select file_data From photos Where id = ?";
   con.query(query, [id], (err, result) => {
     if (err) {
       console.log(err);
@@ -136,7 +144,11 @@ app.get("/image/:id", (req, res) => {
 // Picture controller
 app.post("/store", (req, res) => {
   const { image, fileName } = req.body;
-  const query = "Insert Into file(null, file_name, file_data, created_by, created_on) Values(?,?,?,CURRENT_TIMESTAMP)";
+  con.query("USE brainbank", function(err, result, fields){
+    if(err) throw err;
+    console.log("Set database to brainbank");
+  });
+  const query = "Insert Into photos(file_name, file_data, created_by, created_on) Values(?,?,?,CURRENT_TIMESTAMP)";
   con.query(query, [fileName, image, 'Program'], (err, result) => {
     if (err) {
       console.log(err);
