@@ -54,6 +54,8 @@ app.get('/contacts.html', (req, res) => {
 // Send off pictures.html page to client
 app.get('/pictures.html', (req, res) => {
   res.sendFile(__dirname + '/pictures.html');
+});
+
 // Send off calendar.html page to client
 app.get('/calendar.html', (req, res) => {
   res.sendFile(__dirname + '/calendar.html');
