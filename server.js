@@ -108,20 +108,21 @@ app.post('/login', urlencodedParser, (req, res) => {
         'Location': '/home.html'
     });
     res.end();
+    console.log("Login successful");
 
     // SQL queries
-    con.query("USE pets");
-    con.query("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
-    con.query("INSERT INTO emp(id,name) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
-        if(err) throw err;
-        // console.log(result);
-        // console.log("Table results above");
-    });
-    con.query("SELECT * FROM emp", function(err, result, field){
-        if(err) throw err;
-        console.log("emp table below:");
-        console.log(result);
-    });
+    // con.query("USE pets");
+    // con.query("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
+    // con.query("INSERT INTO emp(id,name) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+    //     if(err) throw err;
+    //     // console.log(result);
+    //     // console.log("Table results above");
+    // });
+    // con.query("SELECT * FROM emp", function(err, result, field){
+    //     if(err) throw err;
+    //     console.log("emp table below:");
+    //     console.log(result);
+    // });
 });
 
 // Picture controller
