@@ -12,14 +12,50 @@
 <body>
 <div id="container">
     <form action="/calendar" method="POST">
-        <input type="userID" name="userId" placeholder="User">
-        <br />
-        <input type="name" name="name" placeholder="Name">
-        <br />
-        <input type="date" name="startDate" placeholder="Date">
-        <br />
+        <h3>Add task - required fields are marked *</h3>
+        <div>
+            <label>UserId*: </label>
+            <input type="text" name="userId">
+        </div>
+        <div>
+            <label>Name*: </label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label>Start Date: </label>
+            <input type="date" name="startDate" placeholder="Date">
+        </div>
+        <div>
+            <label>Start Time: </label>
+            <input type="time" name="startTime" placeholder="Start Time">
+        </div>
+        <div>
+            <label>End Time: </label>
+            <input type="time" name="endTime" placeholder="End Time">
+        </div>
+        <div>
+            <textarea class="multi" name="descr" placeholder="Description" size="50"></textarea>
+        </div>
         <button type="submit" class="nav">Submit</button>
     </form>
 </div>
 </body>
+<style>
+    p {
+        text-align: center;
+        padding: 0px;
+    }
+    textarea {
+        width: 250px;
+        height: 100px;
+    }
+    label {
+        display: inline-block;
+        text-align: right;
+        font-size: 15px;
+    }
+    div {
+        margin-bottom: 10px;
+    }
+</style>
 </html>
