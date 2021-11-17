@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 	<title>Sign Up</title>
-	<script type="application/javascript" src="styleswitcher.js"></script>
+	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
-	<link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" />
+	<!-- <link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" /> -->
 </head>
 
 <body>
@@ -39,29 +39,31 @@
 			</form>
 		</div>
 		-->
+		<form action="/signup" method="POST">
 			<div>
-				<input type="text" placeholder="First Name">
+				<input type="text" name="firstname" placeholder="First Name">
 			</div>
 			<br />
 			<div>
-				<input type="text" placeholder="Last Name">
+				<input type="text" name="lastname" placeholder="Last Name">
 			</div>
 			<br />
 			<div>
-				<input type="email" placeholder="Email">
+				<input type="email" name="email" placeholder="Email">
 			</div>
 			<br />
 			<div>
-				<input type="email" placeholder="Recovery Email">
+				<input type="email" name="recemail" placeholder="Recovery Email">
 			</div>
 			<br />
 			<div>
-				<input type="password" placeholder="Password">
+				<input type="password" name="password" placeholder="Password">
 			</div>
 			<br />
 			<div>
 				<button type="submit" class="nav">Sign Up</button>
 			</div>
+		</form>
 	</div>
 </body>
 </html>
