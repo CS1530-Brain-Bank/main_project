@@ -3,11 +3,11 @@
 
 a.forgotpassword, a.forgotpassword:visited {
 	text-align: center;
-	color: white;
+	color: #FFFFFF;
 }
 
-a.forgotpassword:hover, a.forgotpassword:active {
-	color: darkgreen;
+a.forgotpassword:active, a.forgotpassword:hover {
+	color: #006600;
 }
 
 body {
@@ -16,11 +16,18 @@ body {
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
 }
 
+button.add {
+	float: right;
+	font-weight: bolder;
+	height: 32px;
+	width: 32px;
+}
+
 button.nav {
 	background-color: #669955;
 	border: none;
 	border-radius: 30px;
-	color: white;
+	color: #FFFFFF;
 	height: 32px;
 	padding-bottom: 8px;
 	padding-top: 8px;
@@ -56,6 +63,16 @@ button.nav:active, button.nav:hover {
 	padding-right: 24px;
 }
 
+form {
+	padding-top: 2%;
+	/*text-align: left;*/
+}
+
+h1 {
+	font-size: 250%;
+	font-weight: 700;
+}
+
 #header {
 	margin-top: 2%;
 	margin-left: 2%;
@@ -67,7 +84,7 @@ input[type=email] {
 	border-radius: 5px;
 	height: 32px;
 	text-indent: 8px;
-	width: 256px;
+	width: 320px;
 }
 
 input[type=password] {
@@ -75,10 +92,152 @@ input[type=password] {
 	border-radius: 5px;
 	height: 32px;
 	text-indent: 8px;
-	width: 256px;
+	width: 320px;
+}
+input[type=text] {
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	text-indent: 8px;
+	width: 320px;
+}
+
+label {
+	font-size: 150%;
+	font-weight: bolder;
+	/*text-align: left;*/
 }
 
 p {
 	text-align: left;
 }
 
+select.sort {
+	padding: 4px;
+	width: 25%;
+}
+
+/* homepage only */
+
+#bottomleftbox {
+	background-color: white;
+	bottom: 8%;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	left: 3%;
+	position: absolute;
+	text-align: left;
+	vertical-align: text-bottom;
+	width: 30%;
+}
+
+#bottomleftbox:active,  #bottomleftbox:hover {
+	background-color: grey;
+	bottom: 8%;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	left: 3%;
+	position: absolute;
+	width: 30%;
+}
+
+#bottomrightbox {
+	background-color: white;
+	bottom: 8%;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	position: absolute;
+	right: 32%;
+	text-align: left;
+	vertical-align: text-bottom;
+	width: 30%;
+}
+
+#bottomrightbox:active, #bottomrightbox:hover {
+	background-color: grey;
+	bottom: 8%;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	position: absolute;
+	right: 32%;
+	width: 30%;
+}
+
+div.homepagetext {
+	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
+	font-weight: 600;
+	padding-left: 4%;
+	padding-top: 4%;
+}
+
+#todolistbox {
+	background-color: white;
+	border-color: black;
+	border-style: solid;
+	border-width: 4px;
+	bottom: 6%;
+	font-size: 200%;
+	height: 425px;
+	position: absolute;
+	text-align: left;
+	right: 3%;
+	width: 25%;
+}
+
+#topleftbox {
+	background-color: white;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	left: 3%;
+	position: absolute;
+	text-align: left;
+	top: 8%;
+	vertical-align: text-bottom;
+	width: 30%;
+}
+
+#topleftbox:active, #topleftbox:hover {
+	background-color: grey;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	left: 3%;
+	position: absolute;
+	top: 8%;
+	width: 30%;
+}
+
+#toprightbox {
+	background-color: white;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	position: absolute;
+	right: 32%;
+	top: 8%;
+	text-align: left;
+	vertical-align: text-bottom;
+	width: 30%;
+}
+
+#toprightbox:active, #toprightbox:hover {
+	background-color: grey;
+	box-shadow: 10px 10px 3px grey;
+	height: 280px;
+	position: absolute;
+	right: 32%;
+	top: 8%;
+	width: 30%;
+}
+
+#welcomeuser {
+	background-color: white;
+	border-color: black;
+	border-style: solid;
+	border-width: 4px;
+	font-size: 200%;
+	height: 160px;
+	position: absolute;
+	right: 3%;
+	text-align: left;
+	top: 6%;
+	width: 25%;
+}
