@@ -55,6 +55,11 @@ app.get('/contacts.html', (req, res) => {
   res.sendFile(__dirname + '/contacts.html');
 });
 
+// Send off addContact.html page to client
+app.get('/addContact.html', (req, res) => {
+  res.sendFile(__dirname + '/addContact.html');
+});
+
 // Send off pictures.html page to client
 app.get('/pictures.html', (req, res) => {
   res.sendFile(__dirname + '/pictures.html');
@@ -85,14 +90,34 @@ app.get('/app.js', (req, res) => {
     res.sendFile(__dirname + '/app.js');
 });
 
-// Send off index.ejs script to client
-app.get('/index.ejs', (req, res) => {
-  res.render(__dirname + '/index.ejs');
+// Send off photoUpload.ejs script to client
+app.get('/photoUpload.ejs', (req, res) => {
+  res.render(__dirname + '/photoUpload.ejs');
 });
 
 // Send off imageView.ejs script to client
 app.get('/imageView.ejs', (req, res) => {
   res.render(__dirname + '/imageView.ejs');
+});
+
+// Send off calender.png to client
+app.get('/calender.png', (req, res) => {
+  res.sendFile(__dirname + '/calender.png');
+});
+
+// Send off contacts.png to client
+app.get('/contacts.png', (req, res) => {
+  res.sendFile(__dirname + '/contacts.png');
+});
+
+// Send off pictures.png to client
+app.get('/pictures.png', (req, res) => {
+  res.sendFile(__dirname + '/pictures.png');
+});
+
+// Send off search.png to client
+app.get('/search.png', (req, res) => {
+  res.sendFile(__dirname + '/search.png');
 });
 
 /* ******************* Form Controllers ******************* */
@@ -110,16 +135,17 @@ app.post('/login', urlencodedParser, (req, res) => {
     res.end();
 
     // SQL queries
-    con.query("USE pets");
-    con.query("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
-    con.query("INSERT INTO emp(id,name) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+    con.query("USE brainbank");
+    con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
+        if(err) throw err;
+    });
+    con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
         if(err) throw err;
         // console.log(result);
         // console.log("Table results above");
     });
-    con.query("SELECT * FROM emp", function(err, result, field){
+    con.query("SELECT * FROM users", function(err, result, field){
         if(err) throw err;
-        console.log("emp table below:");
         console.log(result);
     });
 });
@@ -207,12 +233,12 @@ app.post('/contacts', urlencodedParser, (req, res) => {
   });
 
   //Create calendar table
-  con.query("CREATE TABLE IF NOT EXISTS contacts(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, name Text Not NULL, relationship TEXT NOT NULL", function(err, result, fields){
+  con.query("CREATE TABLE IF NOT EXISTS contacts(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, name Text Not NULL, relationship TEXT NOT NULL)", function(err, result, fields){
     if(err) throw err;
     console.log("Created contacts table in database");
 });
 
-  con.query("INSERT INTO calendar(userId, name, relationship) VALUES(?,?,?)", [req.body.userId, req.body.name, req.body.relationship], function(err, result, field){
+  con.query("INSERT INTO contacts(userId, name, relationship) VALUES(?,?,?)", [req.body.userId, req.body.name, req.body.relationship], function(err, result, field){
         if(err) throw err;
   });
 

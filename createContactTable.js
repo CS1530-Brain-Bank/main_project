@@ -34,7 +34,7 @@ con.query("USE brainbank", function(err, result, fields){
 
 // Creates photo table
 // Change "photo" to name of your table, change "photo(name TEXT, ...)" to what your table requires
-con.query("CREATE TABLE IF NOT EXISTS contacts(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, name Text Not NULL, relationship TEXT NOT NULL", function(err, result, fields){
+con.query("CREATE TABLE IF NOT EXISTS contacts(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, name Text Not NULL, relationship TEXT NOT NULL)", function(err, result, fields){
     if(err) throw err;
     console.log("Created contacts table in database");
 });
