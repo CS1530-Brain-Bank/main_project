@@ -31,16 +31,15 @@ con.query("USE brainbank", function(err, result, fields){
 });
 
 //Create calendar table
-con.query("CREATE TABLE IF NOT EXISTS calendar(taskId int IDENTITY(1, 1) PRIMARY KEY NOT NULL, userId TEXT NOT NULL, startDate DATE NOT NULL, startTime TIME, endTime TIME, name TEXT NOT NULL, active BOOL NOT NULL, desc TEXT)", function(err, result, fields){
+con.query("CREATE TABLE IF NOT EXISTS calendar(taskId int PRIMARY KEY NOT NULL AUTO_INCREMENT, userId TEXT NOT NULL, startDate DATE NOT NULL, startTime TIME, endTime TIME, name TEXT NOT NULL, active BOOL NOT NULL, descr TEXT)", function(err, result, fields){
      if(err) throw err;
      console.log("Created calendar table in database");
  });
- CREATE TABLE
 
- //Use queries to init table properties for service
- con.query("INSERT INTO calendar(userId, startDate, name, active) VALUES(?,?,?,?)", [req.body.userId, req.body.startDate, req.body.name, true], function(err, result, field){
-         if(err) throw err;
-     });
+//  //Use queries to init table properties for service
+//  con.query("INSERT INTO calendar(userId, startDate, name, active) VALUES(?,?,?,?)", [req.body.userId, req.body.startDate, req.body.name, true], function(err, result, field){
+//          if(err) throw err;
+//      });
 
  con.query("SELECT * FROM calendar", function(err, result, field){
      if(err) throw err;
