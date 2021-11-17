@@ -86,8 +86,8 @@ app.get('/app.js', (req, res) => {
 });
 
 // Send off index.ejs script to client
-app.get('/index.ejs', (req, res) => {
-  res.render(__dirname + '/index.ejs');
+app.get('/photoUpload.ejs', (req, res) => {
+  res.render(__dirname + '/photoUpload.ejs');
 });
 
 // Send off imageView.ejs script to client
