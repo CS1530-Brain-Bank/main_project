@@ -1,15 +1,33 @@
-- need a "back" button on login.html
-- Add a brainbank logo to landing.html page
-- cannot sign up in signup.html
-- create batch file for installation and initialization
-- create batch file to run server and open webpage
-- log in page creates new user even with same credentials
-- photoUpload.ejs displays error
+landing.html
+- Add a brainbank logo
+
+signup.html
+- cannot sign up
+
+login.html
+- "Forgot your password?" button does nothing
+- need a "back" button in the top left corner
+- functionality is creating a user every time, not checking the database for a log in
+- can log in with blank email and password
+
+home.html
+- should display the user's name instead of "User" in the top right corner
+- To-Do List does not display any information
+- need settings page for changing password, recovery email, etc.
+- add a log out button
+- maybe add another html page for settings to take care of changing account settings and logging out?
+
+pictures.html
+- adding a picture (photoUpload.ejs) displays an error
+
+calendar.html
 - adding a task submits null startTime, endTime, descr
 - tasks are not displayed in calendar.html
+- creating a task with empty information crashes the server
+
+search.html
 - search page does not have any functionality
-- create new contact should have option to add picture, birthday, address, description
+
+contacts.html
+- create new contact (addContact.html) should have option to add picture, birthday, address, description
 - contacts are not displayed in contacts.html
-- need settings page for changing password, recovery email, etc.
-- home.html should display the user's name instead of "User"
-- TodDo List does not display any information
