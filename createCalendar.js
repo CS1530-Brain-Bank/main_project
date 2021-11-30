@@ -37,9 +37,9 @@ con.query("CREATE TABLE IF NOT EXISTS calendar(taskId int PRIMARY KEY NOT NULL A
  });
 
 //Use queries to init table properties for service
-con.query("INSERT INTO calendar(userId, startDate, name, active) VALUES(?,?,?,?)", [req.body.userId, req.body.startDate, req.body.name, true], function(err, result, field){
-      if(err) throw err;
-  });
+//con.query("INSERT INTO calendar(userId, startDate, name, active) VALUES(?,?,?,?)", [req.body.userId, req.body.startDate, req.body.name, true], function(err, result, field){
+      //if(err) throw err;
+//});
 
  con.query("SELECT * FROM calendar", function(err, result, field){
      if(err) throw err;

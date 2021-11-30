@@ -1,0 +1,15 @@
+- need a "back" button on login.html
+- Add a brainbank logo to landing.html page
+- cannot sign up in signup.html
+- create batch file for installation and initialization
+- create batch file to run server and open webpage
+- log in page creates new user even with same credentials
+- photoUpload.ejs displays error
+- adding a task submits null startTime, endTime, descr
+- tasks are not displayed in calendar.html
+- search page does not have any functionality
+- create new contact should have option to add picture, birthday, address, description
+- contacts are not displayed in contacts.html
+- need settings page for changing password, recovery email, etc.
+- home.html should display the user's name instead of "User"
+- TodDo List does not display any information
