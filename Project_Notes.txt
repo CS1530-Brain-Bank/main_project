@@ -21,12 +21,15 @@ home.html
 
 pictures.html
 - adding a picture (photoUpload.ejs) displays an error
+- no pictures displayed
+- no search functionality
 
 calendar.html
 - adding a task submits null startTime, endTime, descr
 - tasks are not displayed in calendar.html
 - creating a task with empty information crashes the server
 - does there need to be a userId input for adding events? Should automatically use the current logged in user
+- no search functionality
 
 search.html
 - search page does not have any functionality
@@ -34,3 +37,4 @@ search.html
 contacts.html
 - create new contact (addContact.html) should have option to add picture, birthday, address, description
 - contacts are not displayed in contacts.html
+- no search functionality
