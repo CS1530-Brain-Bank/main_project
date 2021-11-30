@@ -3,6 +3,8 @@ landing.html
 
 signup.html
 - cannot sign up
+- add verify password input
+- add a contact creation for the user to create their own contact
 
 login.html
 - "Forgot your password?" button does nothing
@@ -24,6 +26,7 @@ calendar.html
 - adding a task submits null startTime, endTime, descr
 - tasks are not displayed in calendar.html
 - creating a task with empty information crashes the server
+- does there need to be a userId input for adding events? Should automatically use the current logged in user
 
 search.html
 - search page does not have any functionality
