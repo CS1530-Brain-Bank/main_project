@@ -51,7 +51,7 @@ const renderCal = () => {
     days += `<div class="next-date">${j}</div>`
     monthDays.innerHTML = days;
   }
-
+  getTasks()
 }
 
 const getTasks = () => {
@@ -83,5 +83,4 @@ document.querySelector('.next').addEventListener('click', () => {
   renderCal();
 })
 
-getTasks()
 renderCal()
