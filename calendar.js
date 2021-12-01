@@ -54,6 +54,25 @@ const renderCal = () => {
 
 }
 
+const getTasks = () => {
+  var mysql = require('mysql2');
+  var con = mysql.createConnection({
+    host: "localhost",
+    // user: "testUser",
+    // password: "testUser123#"
+    user: "root",
+    password: "977EB4CCA8559B0F7C9E920188A7084ED29248CDD12B979C58A19E7ADF57AF80"
+  });
+  // Sets active database to brainbank database
+  con.query("USE brainbank", function(err, result, fields){
+    if(err) throw err;
+  });
+  con.query("SELECT name, startDate, startTime, endTime FROM calendar WHERE userid='userId1'", function(err, result, field){
+    if(err) throw err;
+    document.querySelector('.tasks').innerHTML = result;
+  });
+}
+
 document.querySelector('.prev').addEventListener('click', () => {
   date.setMonth(date.getMonth()-1);
   renderCal();
@@ -64,4 +83,5 @@ document.querySelector('.next').addEventListener('click', () => {
   renderCal();
 })
 
+getTasks()
 renderCal()
