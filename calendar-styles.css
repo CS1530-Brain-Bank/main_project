@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+}
+
+a {
+  font-size: 25px;
+}
+
+body {
+  background-color: #88BB77;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  width: 100%;
+  height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar {
+  width: 90rem;
+  height: 52 rem;
+  color: white;
+  background-color: #222227;
+  box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
+}
+
+.month {
+  width: 100%;
+  height: 12rem;
+  background-attachment: #167e56;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  text-align: center;
+  text-shadow: 0.3rem .5rem rgba(0, 0, 0, 0.5);
+}
+
+.month i {
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.month h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .2rem;
+  margin-bottom: 1rem;
+}
+
+.month p {
+  font-size: 1.6rem;
+}
+
+.weekdays {
+  width: 100%;
+  height: 5rem;
+  padding: 0 .4rem;
+  display: flex;
+  align-items: center;
+}
+
+.weekdays div {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: .1rem;
+  width: calc(89.8rem/7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0.3rem .5rem rgba(0, 0, 0, 0.5);
+}
+
+.days {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.2rem;
+}
+
+.days div {
+  font-size: 1.4rem;
+  margin: .3rem;
+  width: calc(85.2rem/7);
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 .3rem .5rem rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s;
+}
+
+.days div:hover:not(.today) {
+  background-color: #262626;
+  border: .2rem solid #777;
+  cursor: pointer;
+}
+
+.prev-date,
+.next-date {
+  opacity: 0.5;
+}
+
+.today {
+  background-color: #167e56;
+}
+
+.subheader {
+  padding: 0%;
+}
+
+#header {
+	margin-top: 2%;
+	margin-left: 2%;
+	text-align: left;
+}
+
+button.nav {
+	background-color: #669955;
+	border: none;
+	border-radius: 30px;
+	color: #FFFFFF;
+	height: 32px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	width: 256px;
+}
+
+button.nav:active, button.nav:hover {
+	background-color: #447744;
+	border: none;
+	border-radius: 30px;
+	height: 32px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	width: 256px;
+}
+
+
+

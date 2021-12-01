@@ -4,17 +4,43 @@
 <meta charset="utf-8">
 	<title>Calendar</title>
 	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
-	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
+	<link rel="stylesheet" type="text/css" href="calendar-styles.css" title="Default" />
 	<!-- <link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 	<div id="header">
 		<a href="home.html"><button class="nav">Back</button></a>
 	</div>
-	<div id="container">
-		<h1>Calendar</h1>
-		<a href="addTask.html">Add Task</a>
+	<div class="content">
+		<div style="float: right; padding: 20px;">
+			<a href="addTask.html">Add Task</a>
+		</div>
+		<div class="container">
+			<div class="calendar">
+				<div class="month">
+					<i class="fas fa-angle-left prev"></i>
+					<div class="date">
+						<h1></h1>
+						<p></p>
+					</div>
+					<i class="fas fa-angle-right next"></i>
+				</div>
+				<div class="weekdays">
+					<div>Sun</div>
+					<div>Mon</div>
+					<div>Tue</div>
+					<div>Wed</div>
+					<div>Thu</div>
+					<div>Fri</div>
+					<div>Sat</div>
+				</div>
+				<div class="days"></div>
+			</div>
+		</div>
 	</div>
+	<script src="calendar.js"></script>
 </body>
 </html>
+
