@@ -20,8 +20,6 @@ home.html
 - maybe add another html page for settings to take care of changing account settings and logging out?
 
 pictures.html
-- adding a picture (photoUpload.ejs) displays an error
-- no pictures displayed
 - no search functionality
 
 calendar.html
@@ -32,7 +30,7 @@ calendar.html
 - no search functionality
 
 search.html
-- search page does not have any functionality
+- currently nothing to search for
 
 contacts.html
 - create new contact (addContact.html) should have option to add picture, birthday, address, description

@@ -34,9 +34,14 @@ con.query("USE brainbank", function(err, result, fields){
 
 // Creates photo table
 // Change "photo" to name of your table, change "photo(name TEXT, ...)" to what your table requires
-con.query("CREATE TABLE IF NOT EXISTS photos(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, file_name Varchar(30), file_data LONGBLOB Not Null, created_by Varchar(20) Not Null, created_on Datetime Not Null)", function(err, result, fields){
+con.query("CREATE TABLE IF NOT EXISTS photos(id Int AUTO_INCREMENT Not Null Primary Key, userID TEXT NOT NULL, file_name Varchar(30), file_data LONGBLOB Not Null, created_by Varchar(20) Not Null, created_on Datetime Not Null, tags TEXT)", function(err, result, fields){
     if(err) throw err;
     console.log("Created photo table in database");
+});
+
+con.query("ALTER TABLE photos ADD FULLTEXT(tags)", function(err, result, fields){
+    if(err) throw err;
+    console.log("Added fulltext search capabilities to tags column");
 });
 
 // Use queries to init table properties for service

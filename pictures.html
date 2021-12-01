@@ -1,6 +1,50 @@
 <!doctype html>
 <html>
 <head>
+	<script>
+
+		function resolveAfter(){
+			return new Promise(resolve => {
+				var numImgs;
+				var xhr = new XMLHttpRequest();
+				xhr.open( "GET", "http://localhost:8082/numImgs");
+				xhr.onload = function( e ) {
+					data = this.response;
+					parsedData = JSON.parse(data);
+					numImgs = parsedData.picCount;
+				};
+				xhr.send();
+				setTimeout(() => {
+					resolve(numImgs);
+				}, 100);				
+			});
+		}
+		
+
+		async function func(){
+			var numImgs = await resolveAfter();
+			console.log(numImgs);
+			for(var i = 0; i < numImgs; i++){
+				var xhr2 = new XMLHttpRequest();
+				var url = "http://localhost:8082/displayImgs";
+				var params = "index="+encodeURIComponent(i);
+				xhr2.open( "GET", url+"?"+params);
+				console.log("i: "+i);
+				xhr2.onload = function( e2 ) {
+					var img = new Image();
+					img.src = this.response;
+					img.id = 'tblImg';
+					document.getElementById('imgTable').appendChild(img);
+					// console.log(img.src);
+				};
+				xhr2.send();
+			}
+		}
+
+		func();
+		
+
+	</script>
 <meta charset="utf-8">
 	<title>Pictures</title>
 	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
@@ -16,15 +60,16 @@
 		<h1>Pictures</h1>
 		<div id="content">
 			<p>
-				<label for="sort">Sort By: </label>
+				<!--<label for="sort">Sort By: </label>
 				<select name="sort" id="sort" class="sort">
 					<option value="newest">Newest Added First</option>
 					<option value="oldest">Oldest Added First</option>
 					<option value="alphabetical">Alphabetical (A-Z)</option>
 					<option value="reversealpha">Alphabetical (Z-A)</option>
-				</select>
+				</select>-->
 				<a href="photoUpload.ejs"><button class="add" id="addPhoto">+</button></a>
 			</p>
+			<div id="imgTable"></div>
 		</div>
 	</div>
 </body>
