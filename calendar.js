@@ -75,7 +75,7 @@ const getTasks = () => {
       `
       tasks += `<div class="tasks">${task}</div>`
     }
-    document.querySelector('.tasks').innerHTML = parsedData.uData;
+    document.querySelector('.tasks').innerHTML = tasks;
   };
   xhr.send();
 }
