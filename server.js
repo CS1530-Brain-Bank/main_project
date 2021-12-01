@@ -203,6 +203,19 @@ app.get('/displayImgs', (req, res) => {
     });
 });
 
+app.get('/displayTasks', (req, res) => {
+  con.query("USE brainbank", function(err, result, fields){
+    if(err) throw err;
+  });
+  con.query("SELECT name, startDate, startTime, endTime FROM calendar WHERE userid='userId1'", function(err, result, field){
+    if(err) throw err;
+    let data = result;
+    res.json({
+      uData: data
+    });
+  });
+});
+
 // Image Upload controller
 app.post("/store", (req, res) => {
   const { userID, image, fileName, tagText } = req.body;
