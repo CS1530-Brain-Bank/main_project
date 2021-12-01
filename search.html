@@ -1,11 +1,71 @@
 <!doctype html>
 <html>
 <head>
+
+	<script>
+
+		function resolveAfter(){
+			return new Promise(resolve => {
+				var numImgs;
+				const tagText = document.getElementById("tagIn").value;
+				var xhr = new XMLHttpRequest();
+				var url = "http://localhost:8082/numImgsSearch";
+				var params = "tagText="+encodeURIComponent(tagText);
+				xhr.open( "GET", url+"?"+params);
+				xhr.onload = function( e ) {
+					data = this.response;
+					parsedData = JSON.parse(data);
+					numImgs = parsedData.picCount;
+				};
+				xhr.send();
+				setTimeout(() => {
+					resolve(numImgs);
+				}, 100);				
+			});
+		}
+		
+
+		async function func(){
+			var numImgs = await resolveAfter();
+			const tagText = document.getElementById("tagIn").value;
+			console.log(numImgs);
+			for(var i = 0; i < numImgs; i++){
+				var xhr2 = new XMLHttpRequest();
+				var url = "http://localhost:8082/searchImgs";
+				var params = "index="+encodeURIComponent(i)+"&tagText="+encodeURIComponent(tagText);
+				xhr2.open( "GET", url+"?"+params);
+				console.log("i: "+i);
+				xhr2.onload = function( e2 ) {
+					var img = new Image();
+					img.src = this.response;
+					img.id = 'tblImg';
+					document.getElementById('imgTable').appendChild(img);
+					// console.log(img.src);
+				};
+				xhr2.send();
+			}
+		}
+
+		function clearField(){
+			var elem = document.getElementById("imgTable");
+			while(elem.hasChildNodes()){
+				elem.removeChild(elem.lastChild);
+			}
+			document.getElementById("tagIn").value="";
+		}
+
+		function submitSearch() {
+			func();
+		}
+		
+
+	</script>
+
 <meta charset="utf-8">
 	<title>Search</title>
-	<script type="application/javascript" src="styleswitcher.js"></script>
+	<!--<script type="application/javascript" src="styleswitcher.js"></script>-->
 	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
-	<link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" />
+	<!--<link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" />-->
 </head>
 
 <body>
@@ -15,7 +75,11 @@
 	<div id="container">
 		<h1>Search Page</h1>
 		<div id="content">
-			<p>Search results will be displayed here.</p>
+			<p style="text-align:center">
+				<input type="text" id="tagIn" value="Enter Search Tags Here" onclick="clearField()" />
+				<button class="nav" onclick="submitSearch()">Search</button>
+			</p>
+			<div id="imgTable"></div>
 		</div>
 	</div>
 </body>
