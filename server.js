@@ -284,7 +284,7 @@ app.post('/calendar', urlencodedParser, (req, res) => {
          console.log("Created calendar table in database");
     });
 
-    con.query("INSERT INTO calendar(userId, startDate, startTime, endTime, desc, name, active) VALUES(?,?,?,?,?,?,?)", ["userId1", req.body.startDate, req.body.startTime, req.body.endTime, req.body.desc, req.body.name, true], function(err, result, field){
+    con.query("INSERT INTO calendar(userId, startDate, startTime, endTime, name, active, descr) VALUES(?,?,?,?,?,?,?)", ["userId1", req.body.startDate, req.body.startTime, req.body.endTime, req.body.name, true, req.body.descr], function(err, result, field){
           if(err) throw err;
     });
 
