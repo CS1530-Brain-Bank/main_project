@@ -150,32 +150,58 @@ app.post('/login', urlencodedParser, (req, res) => {
     });
 });
 
-// Picture controller
-app.get("/image/:id", (req, res) => {
-  const { id }=req.params;
+// Send off number of pictures from DB to client
+app.get('/numImgs', (req, res) => {
   con.query("USE brainbank", function(err, result, fields){
-    if(err) throw err;
-    console.log("Set database to brainbank");
+      if(err) throw err;
+      console.log("Set database to brainbank");
   });
-  const query = "Select file_data From photos Where id = ?";
-  con.query(query, [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    // console.log(Buffer.from(result[0].file_data).toString())
-    res.render("imageView", { name: result[0].file_data });
-  })
+  const query = "SELECT file_data FROM photos WHERE userID = ?";
+  // Change the [userID1] to whatever is tracking userID across site
+  con.query(query, ['userID1'], (err, result) => {
+      if (err) {
+          console.log(err);
+      }
+      var data = result.length;
+      res.json({
+        picCount: data
+      });
+      console.log(data);
+  });
 });
 
-// Picture controller
+// Send off pictures from DB to client
+app.get('/displayImgs', (req, res) => {
+    console.log("Trying to display images in DB");
+    con.query("USE brainbank", function(err, result, fields){
+        if(err) throw err;
+        console.log("Set database to brainbank");
+    });
+    const query = "SELECT file_data FROM photos WHERE userID = ?";
+    // Change the [userID1] to whatever is tracking userID across site
+    con.query(query, ['userID1'], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        // console.log("Parameters");
+        // console.log(req.query.index);
+        var blob = result[req.query.index];
+        var data = blob.file_data;
+        res.send(data);
+        console.log(data);
+        console.log("Sent image from database");
+    });
+});
+
+// Image Upload controller
 app.post("/store", (req, res) => {
-  const { image, fileName } = req.body;
+  const { userID, image, fileName } = req.body;
   con.query("USE brainbank", function(err, result, fields){
     if(err) throw err;
     console.log("Set database to brainbank");
   });
-  const query = "Insert Into photos(file_name, file_data, created_by, created_on) Values(?,?,?,CURRENT_TIMESTAMP)";
-  con.query(query, [fileName, image, 'Program'], (err, result) => {
+  const query = "Insert Into photos(userID, file_name, file_data, created_by, created_on) Values(?,?,?,?,CURRENT_TIMESTAMP)";
+  con.query(query, ['userID1', fileName, image, 'Program'], (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send({ msg:'SERVER_ERROR' });
