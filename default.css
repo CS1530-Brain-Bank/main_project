@@ -304,3 +304,15 @@ div.homepagetext {
 	top: 6%;
 	width: 25%;
 }
+
+#imgTable{
+	width: 100%;
+	align-items: flex-start;
+	align-self: center;
+}
+
+#tblImg{
+	width: 50%;
+	align-self: center;
+	padding: 5%;
+}
