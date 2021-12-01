@@ -339,6 +339,21 @@ app.post('/contacts', urlencodedParser, (req, res) => {
    });
 });
 
+app.get('/contacts', function (req, res) {
+  con.query("USE brainbank", function(err, result, fields){
+    if(err) throw err;
+  });
+
+  con.query("SELECT name, relationship FROM contacts WHERE userID = 'userID1'", (err, rows) =>{
+    if(err) console.log(err);
+    else{
+      res.send(rows);
+    }
+    
+});
+
+})
+
 
 /* ******************* Listener ******************* */
 
