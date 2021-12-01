@@ -61,6 +61,20 @@ const getTasks = () => {
     data = this.response;
     parsedData = JSON.parse(data);
     console.log(parsedData.uData);
+    let tasks = "";
+    let task = "";
+    for (let i = 0; i < parsedData.uData.length; i++) {
+      task = `
+      <ul>
+        <li>Name: ${parsedData.uData[i].name}</li>
+        <li>Start Date: ${parsedData.uData[i].startDate}</li>
+        <li>Start Time: ${parsedData.uData[i].startTime}</li>
+        <li>End Time: ${parsedData.uData[i].endTime}</li>
+        <li>Description: ${parsedData.uData[i].descr}</li>
+      </ul>
+      `
+      tasks += `<div class="tasks">${task}</div>`
+    }
     document.querySelector('.tasks').innerHTML = parsedData.uData;
   };
   xhr.send();
