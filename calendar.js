@@ -61,7 +61,7 @@ const getTasks = () => {
     data = this.response;
     parsedData = JSON.parse(data);
     console.log(parsedData.uData);
-    document.querySelector('.tasks').innerHTML = parsedData;
+    document.querySelector('.tasks').innerHTML = parsedData.uData;
   };
   xhr.send();
 }
