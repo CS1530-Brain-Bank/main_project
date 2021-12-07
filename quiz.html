@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+	<script>
+
+		function resolveAfter(){
+			return new Promise(resolve => {
+				var numImgs;
+				var xhr = new XMLHttpRequest();
+				xhr.open( "GET", "http://localhost:8082/numImgsQuiz");
+				xhr.onload = function( e ) {
+					data = this.response;
+					parsedData = JSON.parse(data);
+					numImgs = parsedData.picCount;
+				};
+				xhr.send();
+				setTimeout(() => {
+					resolve(numImgs);
+				}, 100);				
+			});
+		}
+		
+
+		async function func(){
+			var numImgs = await resolveAfter();
+			console.log(numImgs);
+			for(var i = 0; i < numImgs; i++){
+				var xhr2 = new XMLHttpRequest();
+				var url = "http://localhost:8082/displayImgsQuiz";
+				var params = "index="+encodeURIComponent(i);
+				xhr2.open( "GET", url+"?"+params);
+				console.log("i: "+i);
+				xhr2.onload = function( e2 ) {
+					var img = new Image();
+					img.src = this.response;
+					img.id = 'tblImg';
+					document.getElementById('imgTable').appendChild(img);
+					// console.log(img.src);
+				};
+				xhr2.send();
+			}
+
+			addSubmit();
+			
+		}
+
+		function addSubmit(){
+			for(var i = 0; i < 5; i++){
+				var input = document.createElement("input");
+				input.type = "text";
+				var inputName = i + 1;
+				input.id = inputName.toString();
+				input.name = ("ans"+inputName.toString());
+				input.required = true;
+
+				console.log("inputId: "+i.toString());
+				document.getElementById('submitTable').appendChild(input);
+
+				var brk = document.createElement("p");
+				document.getElementById('submitTable').appendChild(brk);
+				document.getElementById('submitTable').appendChild(brk);				
+			}
+
+			var submit = document.createElement("input");
+			submit.type = "submit";
+			submit.id = "submit";
+
+
+			document.getElementById('submitTable').appendChild(submit);
+		}
+
+		func();
+		
+
+	</script>
+<meta charset="utf-8">
+	<title>Quiz</title>
+	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
+	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
+	<!-- <link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" /> -->
+</head>
+
+<body>
+	<div id="header">
+		<a href="home.html"><button class="nav">Back</button></a>
+	</div>
+	<div id="container">
+		<h1>Quiz</h1>
+		<div id="content">
+			<p>
+				<!--<label for="sort">Sort By: </label>
+				<select name="sort" id="sort" class="sort">
+					<option value="newest">Newest Added First</option>
+					<option value="oldest">Oldest Added First</option>
+					<option value="alphabetical">Alphabetical (A-Z)</option>
+					<option value="reversealpha">Alphabetical (Z-A)</option>
+				</select>-->
+			</p>
+			<div id="imgTable"></div>
+			<form action="/quizAns" method="POST"><div id="submitTable"></div></form>
+		</div>
+	</div>
+</body>
+</html>

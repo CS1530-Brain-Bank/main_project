@@ -80,6 +80,11 @@ app.get('/signup.html', (req, res) => {
   res.sendFile(__dirname + '/signup.html');
 });
 
+// Send off quiz.html page to client
+app.get('/quiz.html', (req, res) => {
+  res.sendFile(__dirname + '/quiz.html');
+});
+
 // Send off default.css stylesheet to client
 app.get('/default.css', (req, res) => {
     res.sendFile(__dirname + '/default.css');
@@ -151,13 +156,78 @@ app.post('/login', urlencodedParser, (req, res) => {
     });
     con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
         if(err) throw err;
-        // console.log(result);
+        console.log(result);
         // console.log("Table results above");
     });
     con.query("SELECT * FROM users", function(err, result, field){
         if(err) throw err;
         console.log(result);
     });
+});
+
+// Get data from login form and manipulate database   
+// Just a test to demonstrate working connection to database 
+app.post('/signup', urlencodedParser, (req, res) => {
+  // console.log('Got body:', req.body);
+  // res.sendStatus(200);
+
+  // Redirects to home page after form submission
+  res.writeHead(302, {
+      'Location': '/login.html'
+  });
+  res.end();
+
+  // SQL queries
+  con.query("USE brainbank");
+  // con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
+  //     if(err) throw err;
+  // });
+  // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+  //     if(err) throw err;
+  //     console.log(result);
+  //     // console.log("Table results above");
+  // });
+  // con.query("SELECT * FROM users", function(err, result, field){
+  //     if(err) throw err;
+  //     console.log(result);
+  // });
+});
+
+// Get data from quizAns form and manipulate database   
+// Just a test to demonstrate working connection to database 
+app.post('/quizAns', urlencodedParser, (req, res) => {
+  // // Redirects to home page after form submission
+  // res.writeHead(302, {
+  //     'Location': '/quiz.html'
+  // });
+  // res.end();
+
+  // SQL queries
+  con.query("USE brainbank");
+  console.log("\nAnswers:\n"+req.body.ans1+"\n"+req.body.ans2+"\n"+req.body.ans3+"\n"+req.body.ans4+"\n"+req.body.ans5);
+
+  // Query the database to get correct tag names for images in quiz
+
+  res.json({
+    answer1: req.body.ans1,
+    answer2: req.body.ans2,
+    answer3: req.body.ans3,
+    answer4: req.body.ans4,
+    answer5: req.body.ans5,
+  });
+
+  // con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
+  //     if(err) throw err;
+  // });
+  // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+  //     if(err) throw err;
+  //     console.log(result);
+  //     // console.log("Table results above");
+  // });
+  // con.query("SELECT * FROM users", function(err, result, field){
+  //     if(err) throw err;
+  //     console.log(result);
+  // });
 });
 
 // Send off number of pictures from DB to client
@@ -180,8 +250,51 @@ app.get('/numImgs', (req, res) => {
   });
 });
 
+// Send off number of pictures from DB to client
+app.get('/numImgsQuiz', (req, res) => {
+  con.query("USE brainbank", function(err, result, fields){
+      if(err) throw err;
+      // console.log("Set database to brainbank");
+  });
+  const query = "SELECT file_data FROM photos WHERE userID = ?";
+  // Change the [userID1] to whatever is tracking userID across site
+  con.query(query, ['userID1'], (err, result) => {
+      if (err) {
+          console.log(err);
+      }
+      var data = result.length;
+      res.json({
+        picCount: data
+      });
+      // console.log(data);
+  });
+});
+
 // Send off pictures from DB to client
 app.get('/displayImgs', (req, res) => {
+    // console.log("Trying to display images in DB");
+    con.query("USE brainbank", function(err, result, fields){
+        if(err) throw err;
+        // console.log("Set database to brainbank");
+    });
+    const query = "SELECT file_data FROM photos WHERE userID = ?";
+    // Change the [userID1] to whatever is tracking userID across site
+    con.query(query, ['userID1'], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        // console.log("Parameters");
+        // console.log(req.query.index);
+        var blob = result[req.query.index];
+        var data = blob.file_data;
+        res.send(data);
+        // console.log(data);
+        // console.log("Sent image from database");
+    });
+});
+
+// Send off pictures from DB to client
+app.get('/displayImgsQuiz', (req, res) => {
     // console.log("Trying to display images in DB");
     con.query("USE brainbank", function(err, result, fields){
         if(err) throw err;
