@@ -56,8 +56,8 @@ app.get('/contacts.html', (req, res) => {
 });
 
 // Send off addContact.html page to client
-app.get('/addContact.html', (req, res) => {
-  res.sendFile(__dirname + '/addContact.html');
+app.get('/addContact.php', (req, res) => {
+  res.sendFile(__dirname + '/addContact.php');
 });
 
 // Send off pictures.html page to client
@@ -98,11 +98,6 @@ app.get('/app.js', (req, res) => {
 // Send off calendar.js script to client
 app.get('/calendar.js', (req, res) => {
   res.sendFile(__dirname + '/calendar.js');
-});
-
-// Send off contacts.php to client
-app.get('/contacts.php', (req, res) => {
-  res.sendFile(__dirname + '/contacts.php');
 });
 
 // Send off photoUpload.ejs script to client
@@ -318,7 +313,7 @@ app.post('/contacts', urlencodedParser, (req, res) => {
 
   // Redirects to home page after form submission
   res.writeHead(302, {
-      'Location': '/contacts.html'
+      'Location': '/contacts.php'
   });
   res.end();
 
@@ -344,20 +339,9 @@ app.post('/contacts', urlencodedParser, (req, res) => {
    });
 });
 
-app.get('/contacts', function (req, res) {
-  con.query("USE brainbank", function(err, result, fields){
-    if(err) throw err;
-  });
 
-  con.query("SELECT name, relationship FROM contacts WHERE userID = 'userID1'", (err, rows) =>{
-    if(err) console.log(err);
-    else{
-      res.send(rows);
-    }
-    
-});
 
-})
+
 
 
 /* ******************* Listener ******************* */
