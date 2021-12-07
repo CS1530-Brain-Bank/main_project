@@ -16,10 +16,10 @@ app.use(express.urlencoded({extentded:true}));
 // Creates connection to database using root
 var con = mysql.createConnection({
   host: "localhost",
-  // user: "testUser",
-  // password: "testUser123#"
-  user: "root",
-  password: "977EB4CCA8559B0F7C9E920188A7084ED29248CDD12B979C58A19E7ADF57AF80"
+  user: "clientUser",
+  password: "clientUser"
+  // user: "root",
+  // password: "977EB4CCA8559B0F7C9E920188A7084ED29248CDD12B979C58A19E7ADF57AF80"
 });
 
 // Print to console if connected to database
@@ -33,6 +33,11 @@ con.connect(function(err) {
 // Send off login.html page to client
 app.get('/login.html', (req, res) => {
   res.sendFile(__dirname + '/login.html');
+});
+
+// Send off admin.html page to client
+app.get('/admin.html', (req, res) => {
+  res.sendFile(__dirname + '/admin.html');
 });
 
 // Send off landing.html page to client
@@ -163,6 +168,54 @@ app.post('/login', urlencodedParser, (req, res) => {
         if(err) throw err;
         console.log(result);
     });
+});
+
+app.post('/loginAsAdmin', urlencodedParser, (req, res) => {
+  /* ******************* Setup database connection ******************* */
+  // Creates connection to database using root
+  var newCon = mysql.createConnection({
+    host: "localhost",
+    // user: "clientUser",
+    // password: "clientUser"
+    user: "root",
+    password: "977EB4CCA8559B0F7C9E920188A7084ED29248CDD12B979C58A19E7ADF57AF80"
+  });
+
+  // Print to console if connected to database
+  newCon.connect(function(err) {
+    if (err) throw err;
+  });
+
+  if(req.body.password === "adminPassword"){
+    console.log("Connected as Admin!");
+
+    // Redirects to admin page after form submission
+    res.writeHead(302, {
+        'Location': '/admin.html'
+    });
+    res.end();
+
+    // console.log(req.body.command);
+    // console.log(req.body.password);
+
+    newCon.query("USE brainbank");
+    newCon.query(req.body.command, function(err, result, field){
+      if (err) throw err;
+      console.log("Admin command result: ");
+      console.log(result);
+    });
+
+  }
+  else{
+    // Redirects to home page after form submission
+    res.writeHead(302, {
+      'Location': '/home.html'
+  });
+  res.end();
+  }
+
+  console.log("Disconnected as Admin");
+  newCon.end();
 });
 
 // Get data from login form and manipulate database   
