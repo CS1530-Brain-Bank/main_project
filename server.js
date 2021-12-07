@@ -100,6 +100,11 @@ app.get('/calendar.js', (req, res) => {
   res.sendFile(__dirname + '/calendar.js');
 });
 
+// Send off contacts.php to client
+app.get('/contacts.php', (req, res) => {
+  res.sendFile(__dirname + '/contacts.php');
+});
+
 // Send off photoUpload.ejs script to client
 app.get('/photoUpload.ejs', (req, res) => {
   res.render(__dirname + '/photoUpload.ejs');
