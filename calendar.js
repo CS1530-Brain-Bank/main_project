@@ -1,6 +1,6 @@
 const date = new Date();
 
-const comp = date.toISOString().split("T");
+const comp = date.toISOString().split("T")[0].split("-");
 
 const renderCal = () => {
   date.setDate(1);
@@ -43,15 +43,31 @@ const renderCal = () => {
   var curr = "";
 
   for (let x = firstDayIndex; x > 0; x --) {
-    curr = year.toString() + "" + month.toString() + "" + (prevLastday - x + 1).toString();
+    if (month == 0) {
+      curr = year.toString() + "" + 12 + "" + (prevLastday - x + 1).toString();
+    } else {
+      if (month < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + (prevLastday - x + 1).toString();
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + (prevLastday - x + 1).toString();
+      }
+    }
     days += `<div class="prev-date" onclick="getTasks(${curr})">${prevLastday - x + 1}</div>`
   }
   month++;
   for (let i = 1; i <= numDays; i++) {
-    if (i < 10) {
-      curr = year.toString() + "" + month.toString() + "" + 0 + i;
+    if (month < 10) {
+      if (i < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + 0 + i;
+      } else {
+        curr = year.toString() + "" + 0 + month.toString() + "" + i;
+      }
     } else {
-      curr = year.toString() + "" + month.toString() + "" + i;
+      if (i < 10) {
+        curr = year.toString() + "" + month.toString() + "" + 0 + i;
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + i;
+      }
     }
     if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
       days += `<div class="today" onclick="getTasks(${curr})">${i}</div>`
@@ -61,17 +77,27 @@ const renderCal = () => {
   }
 
   for (let j = 1; j <= nextDays; j++) {
-    if (j < 10) {
-      curr = year.toString() + "" + month.toString() + "" + 0 + j;
+    if (month < 10) {
+      if (j < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + 0 + j;
+      } else {
+        curr = year.toString() + "" + 0 + month.toString() + "" + j;
+      }
     } else {
-      curr = year.toString() + "" + month.toString() + "" + j;
+      if (j < 10) {
+        curr = year.toString() + "" + month.toString() + "" + 0 + j;
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + j;
+      }
     }
     days += `<div class="next-date" onclick="getTasks(${curr})">${j}</div>`
     monthDays.innerHTML = days;
   }
+  getTasks(comp[0]+comp[1]+comp[2])
 }
 
 function getTasks(filter) {
+  console.log(filter);
   var xhr = new XMLHttpRequest();
   xhr.open( "GET", "http://localhost:8082/displayTasks");
   xhr.onload = function( e ) {
@@ -82,7 +108,6 @@ function getTasks(filter) {
     for (let i = 0; i < parsedData.uData.length; i++) {
       let sp = parsedData.uData[i].startDate.split("T")[0].split("-");
       let comp = sp[0] + sp[1] + sp[2];
-      console.log(comp);
       if (filter == comp) {
         task = `
         <ul>
