@@ -27,7 +27,7 @@ html {
 
 .container {
   width: 100%;
-  height: 60rem;
+  height: 80rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +45,7 @@ html {
 
 .calendar {
   width: 125rem;
-  height: 100 rem;
+  height: 150 rem;
   color: white;
   background-color: #222227;
   box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
@@ -129,7 +129,7 @@ html {
   font-size: 1.4rem;
   margin: .3rem;
   width: calc(120.2rem/7);
-  height: 7rem;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
