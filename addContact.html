@@ -10,24 +10,29 @@
 </head>
 
 <body>
-<div id="container">
-    <div id="header">
+	<div id="header">
         <a href="contacts.html"><button class="nav">Back</button></a>
     </div>
+<div id="container">
+    
     <form action="/contacts" method="POST">
-        <h3>Add Contact - required fields are marked *</h3>
+        <h1>Add Contact</h1>
+		<h2>Required fields are marked *</h2>
         <div>
-            <label>UserId*: </label>
-            <input type="text" name="userId">
+            <!-- <label>UserId*: </label> -->
+            <input type="text" name="userId" placeholder="UserID*" required>
         </div>
+		<br />
         <div>
-            <label>Name*: </label>
-            <input type="text" name="name">
+            <!-- <label>Name*: </label> -->
+            <input type="text" name="name" placeholder="Name*" required>
         </div>
+		<br />
         <div>
-            <label>Relationship*: </label>
-            <input type="text" name="relationship">
+            <!-- <label>Relationship*: </label> -->
+            <input type="text" name="relationship" placeholder="Relationship*" required>
         </div>
+		<br />
       
         <button type="submit" class="nav">Submit</button>
     </form>
