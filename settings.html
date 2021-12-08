@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+
+	<script>
+		function getSendData(){
+			// console.log("Trying to login");
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/changeRecEmail";
+			var params = "recemail="+encodeURIComponent(document.getElementById('recemail').value);
+			xhr.open( "GET", url+"?"+params);
+			xhr.onload = function( e ) {
+				const respElement = document.getElementById('response');
+				if (respElement.hasChildNodes()) {
+					respElement.removeChild(respElement.childNodes[0]);
+				}
+				data = this.response;
+				parsedData = JSON.parse(data);
+				var newP = document.createElement('p');
+				newP.innerText = parsedData.msg;
+				newP.style = "align-items: center; align-self: center; text-align: center;";
+				respElement.appendChild(newP);
+			};
+			xhr.send();
+		}
+
+		function clearField(){
+			document.getElementById('recemail').value = '';
+		}
+	</script>
+
+<meta charset="utf-8">
+	<title>Settings Page</title>
+	<!--<script type="application/javascript" src="styleswitcher.js"></script>-->
+	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
+	<!--<link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" />-->
+</head>
+
+<body>
+	<div id="header">
+		<a href="home.html"><button class="nav">Back</button></a>
+	</div>
+	<div id="container">
+		<h1>Settings Page</h1>
+		<div id="content">
+			<br />
+			<br />
+			<a href="admin.html">Admin Page</a>
+			<br />
+			<br />
+			<div>
+				<input type="email" onclick="clearField()" id="recemail" name="recemail" placeholder="New Recovery Email" required="true">
+			</div>
+			<br />
+			<div>
+				<button type="submit" onclick="getSendData()" class="nav">Change Recovery Email</button>
+			</div>
+			<br />
+			<div id="response"></div>
+		</div>
+	</div>
+</body>
+</html>
