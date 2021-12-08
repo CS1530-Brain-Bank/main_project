@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Add Task</title>
     <link rel="stylesheet" type="text/css" href="default.css" title="Default" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <script type="text/javascript" src="app.js"></script>
 </head>
@@ -12,7 +13,8 @@
 <body>
 <div id="container">
     <div id="header">
-        <a href="calendar.html"><button class="nav">Back</button></a>
+        <a href="calendar.html"><button class="nav">Calendar</button></a>
+        <a href="home.html" style="float: right; padding-right: 1rem;"><i class="fas fa-home" style="color:green; font-size: 50px;"></i></a>
     </div>
     <form action="/calendar" method="POST">
         <h3>Add task - required fields are marked *</h3>
@@ -55,6 +57,9 @@
     }
     div {
         margin-bottom: 10px;
+    }
+    .home {
+        text-color: green;
     }
 </style>
 </html>
