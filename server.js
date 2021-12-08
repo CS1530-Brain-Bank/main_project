@@ -161,6 +161,11 @@ app.get('/quiz.png', (req, res) => {
   res.sendFile(__dirname + '/quiz.png');
 });
 
+// Send off userManual.pdf to client
+app.get('/userManual.pdf', (req, res) => {
+  res.sendFile(__dirname + '/userManual.pdf');
+});
+
 /* ******************* Form Controllers ******************* */
 
 // Get data from login form and manipulate database   
