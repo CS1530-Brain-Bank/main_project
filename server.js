@@ -3,12 +3,18 @@
 
 /* ******************* Init packages ******************* */
 const express = require('express');
+const session = require('express-session');
 const app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var mysql = require('mysql2');
 
 app.set("view engine", "ejs");
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({extentded:true}));
 
@@ -144,30 +150,54 @@ app.get('/search.png', (req, res) => {
 
 // Get data from login form and manipulate database   
 // Just a test to demonstrate working connection to database 
-app.post('/login', urlencodedParser, (req, res) => {
+app.get('/login', urlencodedParser, (req, res) => {
     // console.log('Got body:', req.body);
     // res.sendStatus(200);
-
-    // Redirects to home page after form submission
-    res.writeHead(302, {
-        'Location': '/home.html'
-    });
-    res.end();
 
     // SQL queries
     con.query("USE brainbank");
     con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
         if(err) throw err;
     });
-    con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
-        if(err) throw err;
-        console.log(result);
-        // console.log("Table results above");
-    });
-    con.query("SELECT * FROM users", function(err, result, field){
-        if(err) throw err;
-        console.log(result);
-    });
+    // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
+    //     if(err) throw err;
+    //     console.log(result);
+    //     // console.log("Table results above");
+    // });
+    // con.query("SELECT * FROM users", function(err, result, field){
+    //     if(err) throw err;
+    //     console.log(result);
+    // });
+
+
+    var email = req.query.email;
+    var password = req.query.password;
+    if (email && password) {
+      con.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
+        if (results.length > 0) {
+          req.session.loggedin = true;
+          req.session.username = email;
+
+          console.log("Logged in as userId: "+results[0].userId);
+
+          res.json({
+            msg: 'Correct Email and Password!'
+          });
+        } 
+        else {
+          res.json({
+            msg: 'Incorrect Email and/or Password!'
+          });
+        }			
+        res.end();
+      });
+    } 
+    else {
+      res.json({
+        msg: 'Incorrect Email and/or Password!'
+      });
+      res.end();
+    }
 });
 
 app.post('/loginAsAdmin', urlencodedParser, (req, res) => {
