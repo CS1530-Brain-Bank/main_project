@@ -140,7 +140,7 @@ select.sort {
 }
 
 #bottomleftbox:active,  #bottomleftbox:hover {
-	background-color: grey;
+	background-image:radial-gradient(white, white, grey);
 	bottom: 8%;
 	box-shadow: 10px 10px 3px grey;
 	height: 280px;
@@ -162,7 +162,7 @@ select.sort {
 }
 
 #bottomrightbox:active, #bottomrightbox:hover {
-	background-color: grey;
+	background-image:radial-gradient(white, white, grey);
 	bottom: 8%;
 	box-shadow: 10px 10px 3px grey;
 	height: 280px;
@@ -234,6 +234,15 @@ div.homepagetext {
 	width: 60%;
 }
 
+span.menutext {
+	bottom: 5%;
+	left: 5%;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+	font-size: 150%;
+	font-weight: 600;
+	position: absolute;
+}
+
 div.homepagetext {
 	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
 	font-weight: 600;
@@ -286,7 +295,7 @@ div.homepagetext {
 }
 
 #topleftbox:active, #topleftbox:hover {
-	background-color: grey;
+	background-image:radial-gradient(white, white, grey);
 	box-shadow: 10px 10px 3px grey;
 	height: 280px;
 	left: 3%;
@@ -308,7 +317,7 @@ div.homepagetext {
 }
 
 #toprightbox:active, #toprightbox:hover {
-	background-color: grey;
+	background-image:radial-gradient(white, white, grey);
 	box-shadow: 10px 10px 3px grey;
 	height: 280px;
 	position: absolute;
