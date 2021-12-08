@@ -67,7 +67,7 @@ const getTasks = () => {
       task = `
       <ul>
         <h3>${parsedData.uData[i].name}</h3>
-        <p>Start Date: ${parsedData.uData[i].startDate}</p>
+        <p>Start Date: ${parsedData.uData[i].startDate.split(" ")[0]}</p>
         <p>Start Time: ${parsedData.uData[i].startTime}</p>
         <p>End Time: ${parsedData.uData[i].endTime}</p>
         <p>Description: ${parsedData.uData[i].descr}</p>
