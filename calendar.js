@@ -1,5 +1,7 @@
 const date = new Date();
 
+const comp = date.toISOString().split("T")[0].split("-");
+
 const renderCal = () => {
   date.setDate(1);
 
@@ -10,6 +12,10 @@ const renderCal = () => {
   const prevLastday = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
 
   const lastDayIndex = new Date(date.getFullYear(), date.getMonth()+1, 0).getDay();
+
+  const year = date.getFullYear();
+
+  let month = date.getMonth();
 
   const monthDays = document.querySelector('.days');
 
@@ -34,48 +40,88 @@ const renderCal = () => {
   document.querySelector('.date p').innerHTML = new Date().toDateString();
 
   let days = "";
+  var curr = "";
 
   for (let x = firstDayIndex; x > 0; x --) {
-    days += `<div class="prev-date">${prevLastday - x + 1}</div>`
+    if (month == 0) {
+      curr = year.toString() + "" + 12 + "" + (prevLastday - x + 1).toString();
+    } else {
+      if (month < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + (prevLastday - x + 1).toString();
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + (prevLastday - x + 1).toString();
+      }
+    }
+    days += `<div class="prev-date" onclick="getTasks(${curr})">${prevLastday - x + 1}</div>`
   }
-
+  month++;
   for (let i = 1; i <= numDays; i++) {
+    if (month < 10) {
+      if (i < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + 0 + i;
+      } else {
+        curr = year.toString() + "" + 0 + month.toString() + "" + i;
+      }
+    } else {
+      if (i < 10) {
+        curr = year.toString() + "" + month.toString() + "" + 0 + i;
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + i;
+      }
+    }
     if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-      days += `<div class="today">${i}</div>`
+      days += `<div class="today" onclick="getTasks(${curr})">${i}</div>`
     } else{
-      days += `<div>${i}</div>`
+      days += `<div onclick="getTasks(${curr})">${i}</div>`
     }
   }
 
   for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="next-date">${j}</div>`
+    if (month < 10) {
+      if (j < 10) {
+        curr = year.toString() + "" + 0 + month.toString() + "" + 0 + j;
+      } else {
+        curr = year.toString() + "" + 0 + month.toString() + "" + j;
+      }
+    } else {
+      if (j < 10) {
+        curr = year.toString() + "" + month.toString() + "" + 0 + j;
+      } else {
+        curr = year.toString() + "" + month.toString() + "" + j;
+      }
+    }
+    days += `<div class="next-date" onclick="getTasks(${curr})">${j}</div>`
     monthDays.innerHTML = days;
   }
-  getTasks()
+  getTasks(comp[0]+comp[1]+comp[2])
 }
 
-const getTasks = () => {
+function getTasks(filter) {
+  console.log(filter);
   var xhr = new XMLHttpRequest();
   xhr.open( "GET", "http://localhost:8082/displayTasks");
   xhr.onload = function( e ) {
     data = this.response;
     parsedData = JSON.parse(data);
-    console.log(parsedData.uData);
     let tasks = "";
     let task = "";
     for (let i = 0; i < parsedData.uData.length; i++) {
-      task = `
-      <ul>
-        <li>Name: ${parsedData.uData[i].name}</li>
-        <li>Start Date: ${parsedData.uData[i].startDate}</li>
-        <li>Start Time: ${parsedData.uData[i].startTime}</li>
-        <li>End Time: ${parsedData.uData[i].endTime}</li>
-        <li>Description: ${parsedData.uData[i].descr}</li>
-      </ul>
-      `
-      tasks += `<div class="tasks">${task}</div>`
+      let sp = parsedData.uData[i].startDate.split("T")[0].split("-");
+      let comp = sp[0] + sp[1] + sp[2];
+      if (filter == comp) {
+        task = `
+        <ul>
+          <h3>${parsedData.uData[i].name}</h3>
+          <p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
+          <p>Start Time: ${parsedData.uData[i].startTime}</p>
+          <p>End Time: ${parsedData.uData[i].endTime}</p>
+          <p>Description: ${parsedData.uData[i].descr}</p>
+        </ul>
+        `
+        tasks += `<div>${task}</div>`
+      }
     }
-    document.querySelector('.tasks').innerHTML = parsedData.uData;
+    document.querySelector('.tasks').innerHTML = tasks;
   };
   xhr.send();
 }

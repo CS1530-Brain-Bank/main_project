@@ -5,35 +5,35 @@
     <meta charset="utf-8">
     <title>Add Task</title>
     <link rel="stylesheet" type="text/css" href="default.css" title="Default" />
-
-    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 <div id="container">
     <div id="header">
-        <a href="calendar.html"><button class="nav">Back</button></a>
+        <a href="calendar.html"><button class="nav">Calendar</button></a>
+        <a href="home.html" style="float: right; padding-right: 1rem;"><i class="fas fa-home" style="color:green; font-size: 50px;"></i></a>
     </div>
     <form action="/calendar" method="POST">
-        <h3>Add task - required fields are marked *</h3>
+        <h3>Add task</h3>
         <div>
-            <label>Task Name*: </label>
+            <label>Task Name: </label>
             <input type="text" name="name" required>
         </div>
         <div>
             <label>Start Date: </label>
-            <input type="date" name="startDate" placeholder="Date">
+            <input type="date" name="startDate" placeholder="Date" required>
         </div>
         <div>
             <label>Start Time: </label>
-            <input type="time" name="startTime" placeholder="Start Time">
+            <input type="time" name="startTime" placeholder="Start Time" required>
         </div>
         <div>
             <label>End Time: </label>
-            <input type="time" name="endTime" placeholder="End Time">
+            <input type="time" name="endTime" placeholder="End Time" required>
         </div>
         <div>
-            <textarea class="multi" name="descr" placeholder="Description" size="50"></textarea>
+            <textarea class="multi" name="descr" placeholder="Description" size="50" required></textarea>
         </div>
         <button type="submit" class="nav">Submit</button>
     </form>
@@ -55,6 +55,9 @@
     }
     div {
         margin-bottom: 10px;
+    }
+    .home {
+        text-color: green;
     }
 </style>
 </html>

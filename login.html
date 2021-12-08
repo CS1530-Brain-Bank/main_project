@@ -2,33 +2,57 @@
 <html>
 <head>
 
+	<script>
+		function getSendData(){
+			// console.log("Trying to login");
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/login";
+			var params = "email="+encodeURIComponent(document.getElementById('email').value)+"&"+"password="+encodeURIComponent(document.getElementById('password').value);
+			xhr.open( "GET", url+"?"+params);
+			xhr.onload = function( e ) {
+				const respElement = document.getElementById('response');
+				if (respElement.hasChildNodes()) {
+					respElement.removeChild(respElement.childNodes[0]);
+				}
+				data = this.response;
+				parsedData = JSON.parse(data);
+				var newP = document.createElement('p');
+				newP.innerText = parsedData.msg;
+				newP.style = "align-items: center; align-self: center; text-align: center;";
+				respElement.appendChild(newP);
+				if(parsedData.msg === "Correct Email and Password!"){
+					location.href = 'home.html';
+				}
+			};
+			xhr.send();
+		}
+	</script>
+
 <meta charset="utf-8">
 	<title>Log In</title>
 	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
-
-	<script type="text/javascript" src="app.js"></script>
 </head>
 
 <body>
 	<div id="container">
 		<h1>Log In</h1>
-		<form action="/login" method="POST">
-			<div>
-				<input type="email" name="email" placeholder="Email">
-			</div>
-			<br />
-			<div>
-				<input type="password" name="password" placeholder="Password">
-			</div>
-			<br />
-			<div>
-				<button type="submit" class="nav">Log In</button>
-			</div>
-			<br />
-			<div>
-				<a class="forgotpassword">Forgot your password?</a>
-			</div>
-		</form>
+		<div>
+			<input type="email" id="email" name="email" placeholder="Email">
+		</div>
+		<br />
+		<div>
+			<input type="password" id="password" name="password" placeholder="Password">
+		</div>
+		<br />
+		<div>
+			<button type="submit" onclick="getSendData()" class="nav">Log In</button>
+		</div>
+		<br />
+		<div id="response"></div>
+		<br />
+		<div>
+			<a class="forgotpassword">Forgot your password?</a>
+		</div>
 	</div>
 </body>
 </html>
