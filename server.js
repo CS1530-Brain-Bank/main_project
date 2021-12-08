@@ -339,7 +339,7 @@ app.get('/changeRecEmail', urlencodedParser, (req, res) => {
 
 // Get data from quizAns form and manipulate database   
 // Just a test to demonstrate working connection to database 
-app.post('/quizAns', urlencodedParser, (req, res) => {
+app.get('/quizAns', urlencodedParser, (req, res) => {
   // // Redirects to home page after form submission
   // res.writeHead(302, {
   //     'Location': '/quiz.html'
@@ -348,16 +348,25 @@ app.post('/quizAns', urlencodedParser, (req, res) => {
 
   // SQL queries
   con.query("USE brainbank");
-  console.log("\nAnswers:\n"+req.body.ans1+"\n"+req.body.ans2+"\n"+req.body.ans3+"\n"+req.body.ans4+"\n"+req.body.ans5);
+  // console.log("\nAnswers:\n"+req.query.corAns1+"\n"+req.query.corAns2+"\n"+req.query.corAns3+"\n"+req.query.corAns4+"\n"+req.query.corAns5+"\n");
 
-  // Query the database to get correct tag names for images in quiz
+  var ans1, ans2, ans3, ans4, ans5;
 
-  res.json({
-    answer1: req.body.ans1,
-    answer2: req.body.ans2,
-    answer3: req.body.ans3,
-    answer4: req.body.ans4,
-    answer5: req.body.ans5,
+  const query = "SELECT tags FROM photos WHERE userID = ? LIMIT 5";
+  con.query(query, [req.session.username], (err, result) => {
+    ans1 = result[req.query.corAns1.split('img')[1]].tags;
+    ans2 = result[req.query.corAns2.split('img')[1]].tags;
+    ans3 = result[req.query.corAns3.split('img')[1]].tags;
+    ans4 = result[req.query.corAns4.split('img')[1]].tags;
+    ans5 = result[req.query.corAns5.split('img')[1]].tags;
+
+    res.json({
+      answer1: ans1,
+      answer2: ans2,
+      answer3: ans3,
+      answer4: ans4,
+      answer5: ans5,
+    });
   });
 
 });

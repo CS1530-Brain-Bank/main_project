@@ -1,78 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<script>
-
-		function resolveAfter(){
-			return new Promise(resolve => {
-				var numImgs;
-				var xhr = new XMLHttpRequest();
-				xhr.open( "GET", "http://localhost:8082/numImgsQuiz");
-				xhr.onload = function( e ) {
-					data = this.response;
-					parsedData = JSON.parse(data);
-					numImgs = parsedData.picCount;
-				};
-				xhr.send();
-				setTimeout(() => {
-					resolve(numImgs);
-				}, 100);				
-			});
-		}
-		
-
-		async function func(){
-			var numImgs = await resolveAfter();
-			console.log(numImgs);
-			for(var i = 0; i < numImgs; i++){
-				var xhr2 = new XMLHttpRequest();
-				var url = "http://localhost:8082/displayImgsQuiz";
-				var params = "index="+encodeURIComponent(i);
-				xhr2.open( "GET", url+"?"+params);
-				console.log("i: "+i);
-				xhr2.onload = function( e2 ) {
-					var img = new Image();
-					img.src = this.response;
-					img.id = 'tblImg';
-					document.getElementById('imgTable').appendChild(img);
-					// console.log(img.src);
-				};
-				xhr2.send();
-			}
-
-			addSubmit();
-			
-		}
-
-		function addSubmit(){
-			for(var i = 0; i < 5; i++){
-				var input = document.createElement("input");
-				input.type = "text";
-				var inputName = i + 1;
-				input.id = inputName.toString();
-				input.name = ("ans"+inputName.toString());
-				input.required = true;
-
-				console.log("inputId: "+i.toString());
-				document.getElementById('submitTable').appendChild(input);
-
-				var brk = document.createElement("p");
-				document.getElementById('submitTable').appendChild(brk);
-				document.getElementById('submitTable').appendChild(brk);				
-			}
-
-			var submit = document.createElement("input");
-			submit.type = "submit";
-			submit.id = "submit";
-
-
-			document.getElementById('submitTable').appendChild(submit);
-		}
-
-		func();
-		
-
-	</script>
+	
 <meta charset="utf-8">
 	<title>Quiz</title>
 	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
@@ -87,18 +16,152 @@
 	<div id="container">
 		<h1>Quiz</h1>
 		<div id="content">
-			<p>
-				<!--<label for="sort">Sort By: </label>
-				<select name="sort" id="sort" class="sort">
-					<option value="newest">Newest Added First</option>
-					<option value="oldest">Oldest Added First</option>
-					<option value="alphabetical">Alphabetical (A-Z)</option>
-					<option value="reversealpha">Alphabetical (Z-A)</option>
-				</select>-->
-			</p>
 			<div id="imgTable"></div>
-			<form action="/quizAns" method="POST"><div id="submitTable"></div></form>
+			<div id="submitTable"></div>
 		</div>
 	</div>
 </body>
+
+<script>
+
+	function func(){
+
+		var numImgs;
+		var xhr = new XMLHttpRequest();
+		xhr.open( "GET", "http://localhost:8082/numImgsQuiz");
+		xhr.onload = function( e ) {
+			data = this.response;
+			parsedData = JSON.parse(data);
+			numImgs = parsedData.picCount;
+			// console.log("numImgs: "+numImgs);
+
+			if(numImgs >= 5){
+				numImgs = 5;
+				// console.log(numImgs);
+
+				for(let i = 0; i < numImgs; i++){
+					var xhr2 = new XMLHttpRequest();
+					var url = "http://localhost:8082/displayImgsQuiz";
+					var params = "index="+encodeURIComponent(i);
+					xhr2.open( "GET", url+"?"+params);
+					// console.log("i: "+i);
+					xhr2.onload = function( e2 ) {
+						var img = new Image();
+						img.src = this.response;
+						img.id = 'tblImg';
+						img.name = "img" + i.toString();
+						document.getElementById('imgTable').appendChild(img);
+						// console.log(img.src);
+					};
+					xhr2.send();
+				}
+
+				addSubmit();
+			}
+			else{
+				const newP = document.createElement('P');
+				newP.innerText = "Not Enough Photos in Database for Quiz";
+				document.getElementById('submitTable').appendChild(newP);
+			}
+		};
+		xhr.send();		
+		
+	}
+
+	function addSubmit(){
+		for(let i = 0; i < 5; i++){
+			var input = document.createElement("input");
+			input.type = "text";
+			var inputName = i + 1;
+			input.id = inputName.toString();
+			input.name = ("ans"+inputName.toString());
+			input.required = true;
+
+			// console.log("inputId: "+i.toString());
+			document.getElementById('submitTable').appendChild(input);
+
+			var brk = document.createElement("p");
+			document.getElementById('submitTable').appendChild(brk);
+			document.getElementById('submitTable').appendChild(brk);				
+		}
+
+		var submit = document.createElement("button");
+		submit.type = "submit";
+		submit.id = "submit";
+		submit.innerHTML = "Submit";
+		submit.onclick = function () {
+			// console.log("Button Pressed");
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/quizAns";
+			var ans1 = "ans1="+encodeURIComponent(document.getElementById('1').value)+"&";
+			var ans2 = "ans2="+encodeURIComponent(document.getElementById('2').value)+"&";
+			var ans3 = "ans3="+encodeURIComponent(document.getElementById('3').value)+"&";
+			var ans4 = "ans4="+encodeURIComponent(document.getElementById('4').value)+"&";
+			var ans5 = "ans5="+encodeURIComponent(document.getElementById('5').value)+"&";
+
+			var corAns1 = "corAns1="+encodeURIComponent(document.getElementById('imgTable').childNodes[0].name)+"&";
+			var corAns2 = "corAns2="+encodeURIComponent(document.getElementById('imgTable').childNodes[1].name)+"&";
+			var corAns3 = "corAns3="+encodeURIComponent(document.getElementById('imgTable').childNodes[2].name)+"&";
+			var corAns4 = "corAns4="+encodeURIComponent(document.getElementById('imgTable').childNodes[3].name)+"&";
+			var corAns5 = "corAns5="+encodeURIComponent(document.getElementById('imgTable').childNodes[4].name);
+
+			var params = ans1+ans2+ans3+ans4+ans5+corAns1+corAns2+corAns3+corAns4+corAns5;
+
+			xhr.open( "GET", url+"?"+params);
+			xhr.onload = function( e ) {
+				data = this.response;
+				parsedData = JSON.parse(data);
+				var answer1 = parsedData.answer1;
+				var answer2 = parsedData.answer2;
+				var answer3 = parsedData.answer3;
+				var answer4 = parsedData.answer4;
+				var answer5 = parsedData.answer5;
+				
+				if(answer1 === document.getElementById('1').value){
+					document.getElementById('1').style="background-color:null";
+				}
+				else{
+					document.getElementById('1').style="background-color:red";
+				}
+				if(answer2 === document.getElementById('2').value){
+					document.getElementById('2').style="background-color:null";
+				}
+				else{
+					document.getElementById('2').style="background-color:red";
+				}
+				if(answer3 === document.getElementById('3').value){
+					document.getElementById('3').style="background-color:null";
+				}
+				else{
+					document.getElementById('3').style="background-color:red";
+				}
+				if(answer4 === document.getElementById('4').value){
+					document.getElementById('4').style="background-color:null";
+				}
+				else{
+					document.getElementById('4').style="background-color:red";
+				}
+				if(answer5 === document.getElementById('5').value){
+					document.getElementById('5').style="background-color:null";
+				}
+				else{
+					document.getElementById('5').style="background-color:red";
+				}
+
+				document.getElementById('1').value = answer1;
+				document.getElementById('2').value = answer2;
+				document.getElementById('3').value = answer3;
+				document.getElementById('4').value = answer4;
+				document.getElementById('5').value = answer5;
+			};
+			xhr.send();
+		};
+
+		document.getElementById('submitTable').appendChild(submit);
+	}
+
+	func();		
+
+</script>
+
 </html>
