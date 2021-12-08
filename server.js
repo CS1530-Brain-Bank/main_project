@@ -307,8 +307,8 @@ app.get('/numImgs', (req, res) => {
       // console.log("Set database to brainbank");
   });
   const query = "SELECT file_data FROM photos WHERE userID = ?";
-  // Change the [userID1] to whatever is tracking userID across site
-  con.query(query, ['userID1'], (err, result) => {
+  // Change the [req.session.username] to whatever is tracking userID across site
+  con.query(query, [req.session.username], (err, result) => {
       if (err) {
           console.log(err);
       }
@@ -327,8 +327,8 @@ app.get('/numImgsQuiz', (req, res) => {
       // console.log("Set database to brainbank");
   });
   const query = "SELECT file_data FROM photos WHERE userID = ?";
-  // Change the [userID1] to whatever is tracking userID across site
-  con.query(query, ['userID1'], (err, result) => {
+  // Change the [req.session.username] to whatever is tracking userID across site
+  con.query(query, [req.session.username], (err, result) => {
       if (err) {
           console.log(err);
       }
@@ -348,8 +348,8 @@ app.get('/displayImgs', (req, res) => {
         // console.log("Set database to brainbank");
     });
     const query = "SELECT file_data FROM photos WHERE userID = ?";
-    // Change the [userID1] to whatever is tracking userID across site
-    con.query(query, ['userID1'], (err, result) => {
+    // Change the [req.session.username] to whatever is tracking userID across site
+    con.query(query, [req.session.username], (err, result) => {
         if (err) {
             console.log(err);
         }
@@ -371,8 +371,8 @@ app.get('/displayImgsQuiz', (req, res) => {
         // console.log("Set database to brainbank");
     });
     const query = "SELECT file_data FROM photos WHERE userID = ?";
-    // Change the [userID1] to whatever is tracking userID across site
-    con.query(query, ['userID1'], (err, result) => {
+    // Change the [req.session.username] to whatever is tracking userID across site
+    con.query(query, [req.session.username], (err, result) => {
         if (err) {
             console.log(err);
         }
@@ -390,7 +390,7 @@ app.get('/displayTasks', (req, res) => {
   con.query("USE brainbank", function(err, result, fields){
     if(err) throw err;
   });
-  con.query("SELECT name, startDate, startTime, endTime, descr FROM calendar WHERE userid='userId1'", function(err, result, field){
+  con.query("SELECT name, startDate, startTime, endTime, descr FROM calendar WHERE userid=?", [req.session.username], function(err, result, field){
     if(err) throw err;
     let data = result;
     res.json({
@@ -407,7 +407,7 @@ app.post("/store", (req, res) => {
     // console.log("Set database to brainbank");
   });
   const query = "INSERT INTO photos(userID, file_name, file_data, created_by, created_on, tags) VALUES(?,?,?,?,CURRENT_TIMESTAMP,?)";
-  con.query(query, ['userID1', fileName, image, 'Program', tagText], (err, result) => {
+  con.query(query, [req.session.username, fileName, image, 'Program', tagText], (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send({ msg:'SERVER_ERROR' });
@@ -425,8 +425,8 @@ app.get('/numImgsSearch', (req, res) => {
       // console.log("Set database to brainbank");
   });
   const query = "SELECT file_data FROM photos WHERE userID = ? AND MATCH(tags) AGAINST(?)";
-  // Change the [userID1] to whatever is tracking userID across site
-  con.query(query, ['userID1', tagText], (err, result) => {
+  // Change the [req.session.username] to whatever is tracking userID across site
+  con.query(query, [req.session.username, tagText], (err, result) => {
       if (err) {
           console.log(err);
       }
@@ -447,7 +447,7 @@ app.get("/searchImgs", (req, res) => {
     // console.log("Set database to brainbank");
   });
   const query = "SELECT file_data FROM photos WHERE userID = ? AND MATCH(tags) AGAINST(?)";
-  con.query(query, ['userID1', tagText], (err, result) => {
+  con.query(query, [req.session.username, tagText], (err, result) => {
     if (err) {
       console.log(err);
     }
@@ -480,7 +480,7 @@ app.post('/calendar', urlencodedParser, (req, res) => {
          console.log("Created calendar table in database");
     });
 
-    con.query("INSERT INTO calendar(userId, startDate, startTime, endTime, name, active, descr) VALUES(?,?,?,?,?,?,?)", ["userId1", req.body.startDate, req.body.startTime, req.body.endTime, req.body.name, true, req.body.descr], function(err, result, field){
+    con.query("INSERT INTO calendar(userId, startDate, startTime, endTime, name, active, descr) VALUES(?,?,?,?,?,?,?)", [req.session.username, req.body.startDate, req.body.startTime, req.body.endTime, req.body.name, true, req.body.descr], function(err, result, field){
           if(err) throw err;
     });
 
@@ -527,7 +527,7 @@ app.get('/contacts', function (req, res) {
     if(err) throw err;
   });
 
-  con.query("SELECT name, relationship FROM contacts WHERE userID = 'userID1'", (err, rows) =>{
+  con.query("SELECT name, relationship FROM contacts WHERE userID =?", [req.session.username], (err, rows) =>{
     if(err) console.log(err);
     else{
       res.send(rows);
