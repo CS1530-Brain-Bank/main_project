@@ -27,5 +27,36 @@
 			</p>
 		</div>
 	</div>
+	<table id="tableData" class ="table table-fixed">
+		<thead>
+			<tr></tr>
+		</thead>
+	</table>
+	<tbody class="tbody">
+	</tbody>
 </body>
+<script>
+	$(document).ready(() => {
+	$.ajax({
+		ulr: "http://localhost:8082/contacts",
+		method: 'GET',
+		success: function(response){
+			if(response.rows.length > 0){
+				for(let index = 0; index < response.rows.length; index++) {
+                	var newRow = $("<tr>");
+                	var cols = "";
+                	var name = '';
+                	var relationship = '';
+                	
+                	cols += '<td> '+ response.rows[index].name +'</td>';
+                	cols += '<td> '+ response.rows[index].relationship +'</td>';
+                	                
+                	newRow.append(cols);
+                	$("#tableData .tbody").append(newRow);
+            	}  
+			}
+		}
+	})
+	})
+</script>
 </html>
