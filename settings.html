@@ -27,6 +27,16 @@
 		function clearField(){
 			document.getElementById('recemail').value = '';
 		}
+
+		function logout(){
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/logout";
+			xhr.open( "POST", url);
+			xhr.onload = function( e ) {
+				location.href = 'login.html';
+			};
+			xhr.send();
+		}
 	</script>
 
 <meta charset="utf-8">
@@ -46,6 +56,9 @@
 			<br />
 			<br />
 			<a href="admin.html">Admin Page</a>
+			<br />
+			<br />
+			<button type="button" class="nav" onclick="logout()">Logout</button>
 			<br />
 			<br />
 			<div>
