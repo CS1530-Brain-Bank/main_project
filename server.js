@@ -218,6 +218,21 @@ app.get('/login', urlencodedParser, (req, res) => {
     }
 });
 
+// Logout controller
+app.post('/logout', urlencodedParser, (req, res) => {
+  // Redirects to admin page after form submission
+  // res.writeHead(302, {
+  //     'Location': '/login.html'
+  // });
+  // res.end();
+
+  console.log("Logging Out");
+  req.session.destroy();
+  console.log("Logged Out");
+
+  res.redirect('/login.html');
+});
+
 app.post('/loginAsAdmin', urlencodedParser, (req, res) => {
   /* ******************* Setup database connection ******************* */
   // Creates connection to database using root
