@@ -96,6 +96,11 @@ app.get('/quiz.html', (req, res) => {
   res.sendFile(__dirname + '/quiz.html');
 });
 
+// Send off settings.html page to client
+app.get('/settings.html', (req, res) => {
+  res.sendFile(__dirname + '/settings.html');
+});
+
 // Send off default.css stylesheet to client
 app.get('/default.css', (req, res) => {
     res.sendFile(__dirname + '/default.css');
@@ -144,6 +149,16 @@ app.get('/pictures.png', (req, res) => {
 // Send off search.png to client
 app.get('/search.png', (req, res) => {
   res.sendFile(__dirname + '/search.png');
+});
+
+// Send off settings.png to client
+app.get('/settings.png', (req, res) => {
+  res.sendFile(__dirname + '/settings.png');
+});
+
+// Send off quiz.png to client
+app.get('/quiz.png', (req, res) => {
+  res.sendFile(__dirname + '/quiz.png');
 });
 
 /* ******************* Form Controllers ******************* */
@@ -272,6 +287,38 @@ app.post('/signup', urlencodedParser, (req, res) => {
   const query = "INSERT INTO users(email,password,firstname,lastname,recemail) VALUES(?,?,?,?,?)";
   con.query(query, [req.body.email, req.body.password, req.body.firstname, req.body.lastname, req.body.recemail], function(err, result, field){
       if(err) throw err;
+  });
+});
+
+// Get data from settings page to change recovery email
+app.get('/changeRecEmail', urlencodedParser, (req, res) => {
+  // console.log('Got body:', req.body);
+  // res.sendStatus(200);
+
+  // SQL queries
+  con.query("USE brainbank");
+  con.query("CREATE TABLE IF NOT EXISTS users(userID INT primary key NOT NULL auto_increment, email TEXT NOT NULL, password TEXT NOT NULL, firstname TEXT, lastname TEXT, recemail TEXT)", function(err, result, field){
+      if(err) throw err;
+  });
+
+  var userID = req.session.username;
+  var userIDSplit = userID.split('ID');
+  var userIDInt = userIDSplit[1];
+  // console.log("userIDInt: "+userIDInt);
+
+  const query = "UPDATE users SET recemail = ? WHERE userID = ?";
+  con.query(query, [req.query.recemail, userIDInt], function(err, result, field){
+      if(err){
+        res.json({
+          msg: "Couldn't update Recovery Email"
+        });
+        throw err;
+      } 
+      else{
+        res.json({
+          msg: "Success"
+        });
+      }
   });
 });
 
