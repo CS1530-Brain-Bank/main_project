@@ -61,20 +61,26 @@
 	  xhr.onload = function( e ) {
 		data = this.response;
 		parsedData = JSON.parse(data);
+
 		const date = new Date();
+		const comp = date.toISOString().split("T")[0];
+
 		let tasks = "";
 		let task = "";
-		for (let i = 0; i < parsedData.uData.length && i < 1; i++) {
-		  task = `
-		  <ul>
-			<h3>${parsedData.uData[i].name}</h3>
-			<p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
-			<p>Start Time: ${parsedData.uData[i].startTime}</p>
-			<p>End Time: ${parsedData.uData[i].endTime}</p>
-			<p>Description: ${parsedData.uData[i].descr}</p>
-		  </ul>
-		  `
-		  tasks += `<div>${task}</div>`
+		for (let i = 0; i < parsedData.uData.length; i++) {
+			if (parsedData.uData[i].startDate.split("T")[0] == comp) {
+				task = `
+				<ul>
+				<h3>${parsedData.uData[i].name}</h3>
+				<p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
+				<p>Start Time: ${parsedData.uData[i].startTime}</p>
+				<p>End Time: ${parsedData.uData[i].endTime}</p>
+				<p>Description: ${parsedData.uData[i].descr}</p>
+				</ul>
+				`
+				tasks += `<div>${task}</div>`
+				break;
+			}
 		}
 		document.querySelector('.tasks').innerHTML = tasks;
 	  };

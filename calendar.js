@@ -1,5 +1,7 @@
 const date = new Date();
 
+const comp = date.toISOString().split("T");
+
 const renderCal = () => {
   date.setDate(1);
 
@@ -10,6 +12,10 @@ const renderCal = () => {
   const prevLastday = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
 
   const lastDayIndex = new Date(date.getFullYear(), date.getMonth()+1, 0).getDay();
+
+  const year = date.getFullYear();
+
+  let month = date.getMonth();
 
   const monthDays = document.querySelector('.days');
 
@@ -34,28 +40,38 @@ const renderCal = () => {
   document.querySelector('.date p').innerHTML = new Date().toDateString();
 
   let days = "";
+  var curr = "";
 
   for (let x = firstDayIndex; x > 0; x --) {
-    days += `<div class="prev-date">${prevLastday - x + 1}</div>`
+    curr = year.toString() + "" + month.toString() + "" + (prevLastday - x + 1).toString();
+    days += `<div class="prev-date" onclick="getTasks(${curr})">${prevLastday - x + 1}</div>`
   }
-
+  month++;
   for (let i = 1; i <= numDays; i++) {
+    if (i < 10) {
+      curr = year.toString() + "" + month.toString() + "" + 0 + i;
+    } else {
+      curr = year.toString() + "" + month.toString() + "" + i;
+    }
     if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-      days += `<div class="today">${i}</div>`
+      days += `<div class="today" onclick="getTasks(${curr})">${i}</div>`
     } else{
-      days += `<div>${i}</div>`
+      days += `<div onclick="getTasks(${curr})">${i}</div>`
     }
   }
 
   for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="next-date">${j}</div>`
+    if (j < 10) {
+      curr = year.toString() + "" + month.toString() + "" + 0 + j;
+    } else {
+      curr = year.toString() + "" + month.toString() + "" + j;
+    }
+    days += `<div class="next-date" onclick="getTasks(${curr})">${j}</div>`
     monthDays.innerHTML = days;
   }
-
-  getTasks()
 }
 
-const getTasks = () => {
+function getTasks(filter) {
   var xhr = new XMLHttpRequest();
   xhr.open( "GET", "http://localhost:8082/displayTasks");
   xhr.onload = function( e ) {
@@ -64,16 +80,21 @@ const getTasks = () => {
     let tasks = "";
     let task = "";
     for (let i = 0; i < parsedData.uData.length; i++) {
-      task = `
-      <ul>
-        <h3>${parsedData.uData[i].name}</h3>
-        <p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
-        <p>Start Time: ${parsedData.uData[i].startTime}</p>
-        <p>End Time: ${parsedData.uData[i].endTime}</p>
-        <p>Description: ${parsedData.uData[i].descr}</p>
-      </ul>
-      `
-      tasks += `<div>${task}</div>`
+      let sp = parsedData.uData[i].startDate.split("T")[0].split("-");
+      let comp = sp[0] + sp[1] + sp[2];
+      console.log(comp);
+      if (filter == comp) {
+        task = `
+        <ul>
+          <h3>${parsedData.uData[i].name}</h3>
+          <p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
+          <p>Start Time: ${parsedData.uData[i].startTime}</p>
+          <p>End Time: ${parsedData.uData[i].endTime}</p>
+          <p>Description: ${parsedData.uData[i].descr}</p>
+        </ul>
+        `
+        tasks += `<div>${task}</div>`
+      }
     }
     document.querySelector('.tasks').innerHTML = tasks;
   };
