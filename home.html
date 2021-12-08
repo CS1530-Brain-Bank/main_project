@@ -56,30 +56,31 @@
 </html>
 <script>
 	const getTasks = () => {
-		var xhr = new XMLHttpRequest();
-		xhr.open( "GET", "http://localhost:8082/displayTasks");
-		xhr.onload = function( e ) {
-			data = this.response;
-			parsedData = JSON.parse(data);
-			console.log(parsedData.uData);
-			let tasks = "";
-			let task = "";
-			for (let i = 0; i < parsedData.uData.length; i++) {
-				task = `
-				<ul>
-					<li>Name: ${parsedData.uData[i].name}</li>
-					<li>Start Date: ${parsedData.uData[i].startDate}</li>
-					<li>Start Time: ${parsedData.uData[i].startTime}</li>
-					<li>End Time: ${parsedData.uData[i].endTime}</li>
-					<li>Description: ${parsedData.uData[i].descr}</li>
-				</ul>
-				`
-				tasks += {task};
-			}
-			document.querySelector('.tasks').innerHTML = tasks;
-		};
-		xhr.send();
+	  var xhr = new XMLHttpRequest();
+	  xhr.open( "GET", "http://localhost:8082/displayTasks");
+	  xhr.onload = function( e ) {
+		data = this.response;
+		parsedData = JSON.parse(data);
+		console.log(parsedData.uData);
+		let tasks = "";
+		let task = "";
+		for (let i = 0; i < parsedData.uData.length; i++) {
+		  task = `
+		  <ul>
+			<h3>${parsedData.uData[i].name}</h3>
+			<p>Start Date: ${parsedData.uData[i].startDate}</p>
+			<p>Start Time: ${parsedData.uData[i].startTime}</p>
+			<p>End Time: ${parsedData.uData[i].endTime}</p>
+			<p>Description: ${parsedData.uData[i].descr}</p>
+		  </ul>
+		  `
+		  tasks += `<div>${task}</div>`
+		}
+		document.querySelector('.tasks').innerHTML = tasks;
+	  };
+	  xhr.send();
 	}
+
 	window.onload = function() {
   	getTasks();
 	}

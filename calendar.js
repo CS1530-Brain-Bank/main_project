@@ -51,6 +51,7 @@ const renderCal = () => {
     days += `<div class="next-date">${j}</div>`
     monthDays.innerHTML = days;
   }
+
   getTasks()
 }
 
@@ -60,20 +61,19 @@ const getTasks = () => {
   xhr.onload = function( e ) {
     data = this.response;
     parsedData = JSON.parse(data);
-    console.log(parsedData.uData);
     let tasks = "";
     let task = "";
     for (let i = 0; i < parsedData.uData.length; i++) {
       task = `
       <ul>
-        <li>Name: ${parsedData.uData[i].name}</li>
-        <li>Start Date: ${parsedData.uData[i].startDate}</li>
-        <li>Start Time: ${parsedData.uData[i].startTime}</li>
-        <li>End Time: ${parsedData.uData[i].endTime}</li>
-        <li>Description: ${parsedData.uData[i].descr}</li>
+        <h3>${parsedData.uData[i].name}</h3>
+        <p>Start Date: ${parsedData.uData[i].startDate}</p>
+        <p>Start Time: ${parsedData.uData[i].startTime}</p>
+        <p>End Time: ${parsedData.uData[i].endTime}</p>
+        <p>Description: ${parsedData.uData[i].descr}</p>
       </ul>
       `
-      tasks += `<div class="tasks">${task}</div>`
+      tasks += `<div>${task}</div>`
     }
     document.querySelector('.tasks').innerHTML = tasks;
   };
