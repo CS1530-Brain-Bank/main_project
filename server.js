@@ -156,7 +156,7 @@ app.get('/login', urlencodedParser, (req, res) => {
 
     // SQL queries
     con.query("USE brainbank");
-    con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
+    con.query("CREATE TABLE IF NOT EXISTS users(userID INT primary key NOT NULL auto_increment, email TEXT NOT NULL, password TEXT NOT NULL, firstname TEXT, lastname TEXT, recemail TEXT)", function(err, result, field){
         if(err) throw err;
     });
     // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
@@ -175,10 +175,13 @@ app.get('/login', urlencodedParser, (req, res) => {
     if (email && password) {
       con.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
         if (results.length > 0) {
-          req.session.loggedin = true;
-          req.session.username = email;
+          var userIDActive = results[0].userID;
+          userIDActive = "userID"+userIDActive;
 
-          console.log("Logged in as userId: "+results[0].userId);
+          req.session.loggedin = true;
+          req.session.username = userIDActive;
+
+          console.log("Logged in as userId: "+userIDActive);
 
           res.json({
             msg: 'Correct Email and Password!'
@@ -262,18 +265,14 @@ app.post('/signup', urlencodedParser, (req, res) => {
 
   // SQL queries
   con.query("USE brainbank");
-  // con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
-  //     if(err) throw err;
-  // });
-  // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
-  //     if(err) throw err;
-  //     console.log(result);
-  //     // console.log("Table results above");
-  // });
-  // con.query("SELECT * FROM users", function(err, result, field){
-  //     if(err) throw err;
-  //     console.log(result);
-  // });
+  con.query("CREATE TABLE IF NOT EXISTS users(userID INT primary key NOT NULL auto_increment, email TEXT NOT NULL, password TEXT NOT NULL, firstname TEXT, lastname TEXT, recemail TEXT)", function(err, result, field){
+      if(err) throw err;
+  });
+
+  const query = "INSERT INTO users(email,password,firstname,lastname,recemail) VALUES(?,?,?,?,?)";
+  con.query(query, [req.body.email, req.body.password, req.body.firstname, req.body.lastname, req.body.recemail], function(err, result, field){
+      if(err) throw err;
+  });
 });
 
 // Get data from quizAns form and manipulate database   
@@ -299,18 +298,6 @@ app.post('/quizAns', urlencodedParser, (req, res) => {
     answer5: req.body.ans5,
   });
 
-  // con.query("CREATE TABLE IF NOT EXISTS users(userId int PRIMARY KEY NOT NULL AUTO_INCREMENT, email TEXT NOT NULL, password TEXT NOT NULL)", function(err, result, field){
-  //     if(err) throw err;
-  // });
-  // con.query("INSERT INTO users(email,password) VALUES(?,?)", [req.body.email, req.body.password], function(err, result, field){
-  //     if(err) throw err;
-  //     console.log(result);
-  //     // console.log("Table results above");
-  // });
-  // con.query("SELECT * FROM users", function(err, result, field){
-  //     if(err) throw err;
-  //     console.log(result);
-  // });
 });
 
 // Send off number of pictures from DB to client
