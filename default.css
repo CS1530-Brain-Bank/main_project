@@ -94,6 +94,13 @@ input[type=password] {
 	text-indent: 8px;
 	width: 320px;
 }
+input[type=date] {
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	text-indent: 8px;
+	width: 320px;
+}
 input[type=search] {
 	border: none;
 	border-radius: 5px;
@@ -103,6 +110,13 @@ input[type=search] {
 	width: 97.5%;
 }
 input[type=text] {
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	text-indent: 8px;
+	width: 320px;
+}
+input[type=time] {
 	border: none;
 	border-radius: 5px;
 	height: 32px;
@@ -123,6 +137,13 @@ p {
 select.sort {
 	padding: 4px;
 	width: 25%;
+}
+
+textarea {
+	border: none;
+	border-radius: 5px;
+	text-indent: 8px;
+	width: 320px;
 }
 
 /* homepage only */
