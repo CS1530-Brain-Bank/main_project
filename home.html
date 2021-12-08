@@ -6,6 +6,7 @@
 	<!-- <script type="application/javascript" src="styleswitcher.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="default.css" title="Default" />
 	<!-- <link rel="alternate stylesheet" type="text/css" href="blue.css" title="Blue" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 				<div id="searchimage"> <br /> </div>
 			</div>
 		</a>
-		<a href="contacts.php">
+		<a href="contacts.html">
 			<div id="bottomrightbox">
 				
 				Contacts
@@ -37,13 +38,16 @@
 		</a>
 		<div id="welcomeuser">
 			<div class="homepagetext">
-				Welcome, <br />
-				User!
+				Welcome, User!
+				<div id="settingsImageDiv"><a href=settings.html><img id="settingsImage" src=settings.png></a>         <a href="quiz.html"><img id="quizImage" src="quiz.png"></a></div>
 			</div>
 		</div>
 		<div id="todolistbox">
 			<div class="homepagetext">
 				To-Do List:
+				<a href="addTask.html" style="float: right; padding-right: 1rem;">
+					<i class="fas fa-plus"></i>
+				</a>
 				<div class="tasks"></div>
 			</div>
 		</div>
@@ -52,30 +56,37 @@
 </html>
 <script>
 	const getTasks = () => {
-		var xhr = new XMLHttpRequest();
-		xhr.open( "GET", "http://localhost:8082/displayTasks");
-		xhr.onload = function( e ) {
-			data = this.response;
-			parsedData = JSON.parse(data);
-			console.log(parsedData.uData);
-			let tasks = "";
-			let task = "";
-			for (let i = 0; i < parsedData.uData.length; i++) {
+	  var xhr = new XMLHttpRequest();
+	  xhr.open( "GET", "http://localhost:8082/displayTasks");
+	  xhr.onload = function( e ) {
+		data = this.response;
+		parsedData = JSON.parse(data);
+
+		const date = new Date();
+		const comp = date.toISOString().split("T")[0];
+
+		let tasks = "";
+		let task = "";
+		for (let i = 0; i < parsedData.uData.length; i++) {
+			if (parsedData.uData[i].startDate.split("T")[0] == comp) {
 				task = `
 				<ul>
-					<li>Name: ${parsedData.uData[i].name}</li>
-					<li>Start Date: ${parsedData.uData[i].startDate}</li>
-					<li>Start Time: ${parsedData.uData[i].startTime}</li>
-					<li>End Time: ${parsedData.uData[i].endTime}</li>
-					<li>Description: ${parsedData.uData[i].descr}</li>
+				<h3>${parsedData.uData[i].name}</h3>
+				<p>Start Date: ${parsedData.uData[i].startDate.split("T")[0]}</p>
+				<p>Start Time: ${parsedData.uData[i].startTime}</p>
+				<p>End Time: ${parsedData.uData[i].endTime}</p>
+				<p>Description: ${parsedData.uData[i].descr}</p>
 				</ul>
 				`
-				tasks += {task};
+				tasks += `<div>${task}</div>`
+				break;
 			}
-			document.querySelector('.tasks').innerHTML = parsedData.uData;
-		};
-		xhr.send();
+		}
+		document.querySelector('.tasks').innerHTML = tasks;
+	  };
+	  xhr.send();
 	}
+
 	window.onload = function() {
   	getTasks();
 	}
